@@ -1,0 +1,1364 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ÉPURE — 日常の純粋な美学</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ===== リセット & 基本 ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white:  #ffffff;
+      --cream:  #f5f3ef;
+      --light:  #eceae6;
+      --warm:   #d8d4cc;
+      --gray:   #8a8680;
+      --dark:   #2a2826;
+      --black:  #0f0e0d;
+    }
+
+    html { scroll-behavior: smooth; scrollbar-width: none; }
+    html::-webkit-scrollbar { display: none; }
+
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+      background: var(--white);
+      color: var(--black);
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; }
+    img { display: block; width: 100%; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ===== アナウンスバー ===== */
+    .announce-bar {
+      background: var(--black);
+      color: var(--white);
+      height: 34px;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .announce-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 72px;
+      white-space: nowrap;
+      animation: marquee 40s linear infinite;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+    }
+    .announce-dot {
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      flex-shrink: 0;
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ===== ヘッダー ===== */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      background: var(--white);
+    }
+
+    /* ロゴ行（3グリッド：左/中/右）*/
+    .header-logo-row {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      align-items: center;
+      padding: 0 28px;
+      height: 58px;
+      border-bottom: 1px solid var(--light);
+    }
+    .header-util-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--gray);
+    }
+    .header-util-left a { transition: color 0.2s; }
+    .header-util-left a:hover { color: var(--black); }
+    .header-util-sep { color: var(--light); font-size: 12px; }
+    .header-logo-center {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px;
+      font-weight: 400;
+      letter-spacing: 0.6em;
+      text-transform: uppercase;
+      text-align: center;
+      padding-right: 0.6em; /* letter-spacingの分を補正 */
+    }
+    .header-logo-center a { transition: opacity 0.2s; }
+    .header-logo-center a:hover { opacity: 0.65; }
+    .header-util-right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 22px;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      color: var(--gray);
+    }
+    .header-util-right a { transition: color 0.2s; }
+    .header-util-right a:hover { color: var(--black); }
+    .cart-link { position: relative; }
+    .cart-badge {
+      position: absolute;
+      top: -6px;
+      right: -10px;
+      background: var(--black);
+      color: var(--white);
+      font-size: 7px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      letter-spacing: 0;
+    }
+
+    /* ナビゲーション */
+    .main-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 40px;
+      border-bottom: 1px solid var(--light);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .main-nav::-webkit-scrollbar { display: none; }
+    .main-nav a {
+      flex-shrink: 0;
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      padding: 0 18px;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      color: var(--dark);
+      transition: color 0.2s;
+      position: relative;
+    }
+    .main-nav a:hover { color: var(--black); }
+    .main-nav a.on::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 18px;
+      right: 18px;
+      height: 1px;
+      background: var(--black);
+    }
+
+    /* ===== 共通：アンダーラインリンクボタン ===== */
+    .link-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      border-bottom: 1px solid var(--black);
+      padding-bottom: 3px;
+      transition: gap 0.28s ease, opacity 0.2s;
+    }
+    .link-arrow:hover { gap: 16px; }
+    .link-arrow-light {
+      border-bottom-color: rgba(255,255,255,0.6);
+      color: var(--white);
+    }
+    .link-arrow-light:hover { border-bottom-color: var(--white); }
+
+    /* ===== コレクション スライダー ===== */
+    /* A.P.C.スタイル：全カード均一幅（33%）・縦長ポートレート画像・横スクロール */
+    .col-slider {
+      position: relative;
+      overflow: hidden;
+      border-bottom: 1px solid var(--light);
+    }
+    .col-track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      gap: 1px;
+      background: var(--light);
+    }
+    .col-track::-webkit-scrollbar { display: none; }
+    .col-card {
+      flex: 0 0 calc(33.333% - 1px);
+      scroll-snap-align: start;
+      background: var(--white);
+      cursor: pointer;
+    }
+    .col-img {
+      /* ビューポート高さ基準で、ヘッダー＋アナウンス＋テキスト分を引いた高さ */
+      height: calc(100vh - 320px);
+      min-height: 300px;
+      max-height: 540px;
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+      transition: transform 0.65s ease;
+    }
+    .col-card:hover .col-img { transform: scale(1.03); }
+    .col-body {
+      padding: 16px 20px 24px;
+    }
+    .col-label {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 6px;
+    }
+    .col-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.04em;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+
+    /* スライダー矢印 */
+    .col-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-65%); /* 画像の中央付近 */
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .col-arrow:hover { background: var(--white); opacity: 1; }
+    .col-arrow.prev { left: 14px; }
+    .col-arrow.next { right: 14px; }
+    .col-arrow svg { width: 12px; height: 12px; }
+
+    /* ===== カテゴリグリッド 4列（縦長・ダークオーバーレイ）===== */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--light);
+    }
+    .cat-tile {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 2 / 3;
+      cursor: pointer;
+    }
+    .cat-tile-bg {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.7s ease;
+    }
+    .cat-tile:hover .cat-tile-bg { transform: scale(1.05); }
+    .cat-tile-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(15,14,13,0.68) 0%,
+        rgba(15,14,13,0.18) 45%,
+        rgba(15,14,13,0.02) 100%
+      );
+      transition: background 0.4s;
+    }
+    .cat-tile:hover .cat-tile-overlay {
+      background: linear-gradient(
+        to top,
+        rgba(15,14,13,0.75) 0%,
+        rgba(15,14,13,0.25) 50%,
+        rgba(15,14,13,0.05) 100%
+      );
+    }
+    .cat-tile-info {
+      position: absolute;
+      bottom: 26px;
+      left: 22px;
+      color: var(--white);
+    }
+    .cat-tile-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 25px;
+      font-weight: 400;
+      letter-spacing: 0.07em;
+      margin-bottom: 5px;
+    }
+    .cat-tile-sub {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.3s;
+    }
+    .cat-tile:hover .cat-tile-sub { color: rgba(255,255,255,0.9); }
+
+    /* ===== セクション共通ヘッダー ===== */
+    .section-hd {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 28px;
+    }
+    .section-ttl {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+    }
+    .section-more {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray);
+      border-bottom: 1px solid var(--warm);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .section-more:hover { color: var(--black); border-color: var(--black); }
+
+    /* ===== プロダクトグリッド 5列 ===== */
+    .products-sec {
+      padding: 56px 28px 64px;
+      border-top: 1px solid var(--light);
+    }
+    .prod-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 2px;
+    }
+    .prod-card { cursor: pointer; }
+    .prod-img-wrap {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 3 / 4;
+      background: var(--cream);
+    }
+    .prod-img {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.55s ease;
+    }
+    .prod-card:hover .prod-img { transform: scale(1.05); }
+
+    /* バッジ（NEW / BESTSELLER）*/
+    .prod-badge {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 8px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      background: var(--black);
+      color: var(--white);
+      padding: 3px 8px;
+    }
+
+    /* ホバー時：カートに追加 オーバーレイ */
+    .prod-hover-layer {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15,14,13,0.18) 0%, transparent 50%);
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: 14px;
+      opacity: 0;
+      transition: opacity 0.32s;
+    }
+    .prod-card:hover .prod-hover-layer { opacity: 1; }
+    .prod-add-btn {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,0.96);
+      color: var(--black);
+      border: none;
+      padding: 10px 22px;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      transition: background 0.2s;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .prod-add-btn:hover { background: var(--white); }
+
+    .prod-body { padding: 10px 0 0; }
+    .prod-colors {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 7px;
+    }
+    .cdot {
+      width: 11px;
+      height: 11px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.15s;
+    }
+    .cdot.on {
+      border-color: var(--black);
+      transform: scale(1.15);
+    }
+    .cdot:hover { border-color: var(--dark); }
+    .prod-name {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      line-height: 1.45;
+      margin-bottom: 4px;
+      color: var(--dark);
+    }
+    .prod-price {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.04em;
+    }
+
+    /* ===== マガジン ===== */
+    .magazine-sec {
+      padding: 52px 28px 60px;
+      background: var(--cream);
+    }
+    .mag-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 30px;
+    }
+    .mag-tag {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      padding: 5px 14px;
+      border: 1px solid var(--warm);
+      color: var(--gray);
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.22s;
+    }
+    .mag-tag:hover { border-color: var(--dark); color: var(--dark); }
+    .mag-tag.on {
+      background: var(--black);
+      color: var(--white);
+      border-color: var(--black);
+    }
+    .mag-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+    .art-card {
+      background: var(--white);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .art-img-wrap {
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      background: var(--light);
+    }
+    .art-img {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.55s ease;
+    }
+    .art-card:hover .art-img { transform: scale(1.05); }
+    .art-body { padding: 18px 20px 24px; }
+    .art-tag {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 9px;
+    }
+    .art-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.65;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+    .art-date {
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      color: var(--warm);
+    }
+
+    /* ===== ライフスタイル タイル 4列（正方形）===== */
+    .ls-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: var(--light);
+    }
+    .ls-tile {
+      position: relative;
+      overflow: hidden;
+      aspect-ratio: 1 / 1;
+      cursor: pointer;
+    }
+    .ls-bg {
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.7s ease;
+    }
+    .ls-tile:hover .ls-bg { transform: scale(1.06); }
+    .ls-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,14,13,0.28);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      transition: background 0.4s;
+    }
+    .ls-tile:hover .ls-overlay { background: rgba(15,14,13,0.38); }
+    .ls-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .ls-sub {
+      font-size: 8.5px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* ===== ブランドストーリー（テキスト左・画像右）===== */
+    .story-sec {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 540px;
+    }
+    .story-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 76px 68px;
+      background: var(--cream);
+    }
+    .story-label {
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 22px;
+    }
+    .story-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1.5;
+      letter-spacing: 0.03em;
+      margin-bottom: 22px;
+      color: var(--dark);
+    }
+    .story-body {
+      font-size: 13px;
+      line-height: 2.1;
+      color: var(--gray);
+      margin-bottom: 34px;
+      max-width: 400px;
+    }
+    .story-img {
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* ===== ストア案内（画像左・テキスト右）===== */
+    .boutique-sec {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 540px;
+    }
+    .boutique-img {
+      background-size: cover;
+      background-position: center;
+    }
+    .boutique-text {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 76px 68px;
+      background: var(--white);
+    }
+
+    /* ===== ニュースレター ===== */
+    .newsletter-sec {
+      background: var(--dark);
+      padding: 80px 28px;
+      text-align: center;
+      border-top: 1px solid rgba(255,255,255,0.04);
+    }
+    .nl-label {
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 18px;
+    }
+    .nl-heading {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      margin-bottom: 10px;
+    }
+    .nl-sub {
+      font-size: 12px;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+      margin-bottom: 36px;
+    }
+    .nl-form {
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      gap: 0;
+      max-width: 440px;
+      margin: 0 auto;
+    }
+    .nl-input {
+      flex: 1;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-right: none;
+      color: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      padding: 13px 18px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .nl-input::placeholder { color: rgba(255,255,255,0.3); }
+    .nl-input:focus { border-color: rgba(255,255,255,0.5); }
+    .nl-btn {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 9px;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      padding: 13px 22px;
+      border: 1px solid var(--white);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      white-space: nowrap;
+    }
+    .nl-btn:hover { background: var(--cream); border-color: var(--cream); }
+    .nl-note {
+      margin-top: 14px;
+      font-size: 10px;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.06em;
+    }
+
+    /* ===== フッター ===== */
+    .site-footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 60px 28px 40px;
+    }
+    .footer-cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 36px;
+    }
+    .footer-col-ttl {
+      font-size: 9px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 18px;
+    }
+    .footer-col ul { display: flex; flex-direction: column; gap: 11px; }
+    .footer-col li a {
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.6);
+      transition: color 0.2s;
+    }
+    .footer-col li a:hover { color: var(--white); }
+    .footer-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px;
+      letter-spacing: 0.58em;
+      text-transform: uppercase;
+      padding-right: 0.58em;
+    }
+    .footer-sns {
+      display: flex;
+      gap: 22px;
+    }
+    .footer-sns a {
+      font-size: 9.5px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      transition: color 0.2s;
+    }
+    .footer-sns a:hover { color: rgba(255,255,255,0.9); }
+    .footer-copy {
+      font-size: 9.5px;
+      color: rgba(255,255,255,0.22);
+      letter-spacing: 0.08em;
+    }
+
+    /* ===== フェードイン アニメーション ===== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .fade-in.visible { opacity: 1; transform: none; }
+    .fade-in.delay-1 { transition-delay: 0.1s; }
+    .fade-in.delay-2 { transition-delay: 0.2s; }
+
+    /* ===== レスポンシブ ===== */
+    @media (max-width: 1200px) {
+      .prod-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+    @media (max-width: 1024px) {
+      .prod-grid { grid-template-columns: repeat(3, 1fr); }
+      .col-card { flex: 0 0 50%; }
+      .story-text, .boutique-text { padding: 56px 44px; }
+      .story-heading { font-size: 28px; }
+    }
+    @media (max-width: 768px) {
+      .header-logo-center { font-size: 18px; letter-spacing: 0.42em; }
+      .header-util-left .header-util-sep,
+      .header-util-left a:last-child { display: none; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .prod-grid { grid-template-columns: repeat(2, 1fr); }
+      .mag-grid { grid-template-columns: 1fr; }
+      .ls-grid { grid-template-columns: repeat(2, 1fr); }
+      .story-sec { grid-template-columns: 1fr; }
+      .story-img { aspect-ratio: 4 / 3; }
+      .boutique-sec { grid-template-columns: 1fr; }
+      .boutique-img { aspect-ratio: 4 / 3; order: 1; }
+      .boutique-text { order: 2; }
+      .story-text, .boutique-text { padding: 48px 28px; }
+      .story-heading { font-size: 26px; }
+      .footer-cols { grid-template-columns: 1fr 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .nl-form { flex-direction: column; }
+      .nl-input { border-right: 1px solid rgba(255,255,255,0.2); border-bottom: none; }
+      .nl-btn { text-align: center; }
+    }
+    @media (max-width: 480px) {
+      .col-card { flex: 0 0 88%; }
+      .main-nav a { padding: 0 12px; font-size: 10px; }
+      .cat-grid { grid-template-columns: repeat(2, 1fr); }
+      .ls-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-cols { grid-template-columns: 1fr; }
+      .products-sec, .magazine-sec { padding: 40px 16px 48px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== アナウンスバー ===== -->
+  <div class="announce-bar">
+    <div class="announce-track">
+      <span>¥15,000以上のご注文で送料無料</span>
+      <span class="announce-dot"></span>
+      <span>NOUVEAU — 2026 SS コレクション 発売中</span>
+      <span class="announce-dot"></span>
+      <span>東京・南青山にて期間限定エキシビション開催中</span>
+      <span class="announce-dot"></span>
+      <span>新規会員登録でウェルカムギフトをプレゼント</span>
+      <span class="announce-dot"></span>
+      <!-- マーキーループのため複製 -->
+      <span>¥15,000以上のご注文で送料無料</span>
+      <span class="announce-dot"></span>
+      <span>NOUVEAU — 2026 SS コレクション 発売中</span>
+      <span class="announce-dot"></span>
+      <span>東京・南青山にて期間限定エキシビション開催中</span>
+      <span class="announce-dot"></span>
+      <span>新規会員登録でウェルカムギフトをプレゼント</span>
+      <span class="announce-dot"></span>
+    </div>
+  </div>
+
+  <!-- ===== ヘッダー ===== -->
+  <header class="site-header">
+    <div class="header-logo-row">
+      <div class="header-util-left">
+        <a href="#">JP</a>
+        <span class="header-util-sep">|</span>
+        <a href="#">EN</a>
+      </div>
+      <div class="header-logo-center">
+        <a href="epure.html">É P U R E</a>
+      </div>
+      <div class="header-util-right">
+        <a href="#">アカウント</a>
+        <a href="#" class="cart-link">
+          カート
+          <span class="cart-badge">0</span>
+        </a>
+      </div>
+    </div>
+    <nav class="main-nav">
+      <a href="#" class="on">家具</a>
+      <a href="#">テキスタイル</a>
+      <a href="#">照明</a>
+      <a href="#">キッチン</a>
+      <a href="#">オブジェ</a>
+      <a href="#">ブランド</a>
+      <a href="#">店舗</a>
+    </nav>
+  </header>
+
+  <!-- ===== コレクション スライダー ===== -->
+  <!-- A.P.C.スタイル：全カード均一幅33%・縦長ポートレート・5枚横スクロール -->
+  <section class="col-slider">
+    <button class="col-arrow prev" id="colPrev" aria-label="前へ">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M8 1.5L3 6l5 4.5"/>
+      </svg>
+    </button>
+    <div class="col-track" id="colTrack">
+
+      <!-- 1: SS2026 メインコレクション -->
+      <div class="col-card">
+        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=85&fit=crop&crop=center');"></div>
+        <div class="col-body">
+          <p class="col-label">2026 Spring / Summer</p>
+          <p class="col-title">新しい静謐。<br>SS2026 コレクション</p>
+          <a href="#" class="link-arrow">コレクションを見る →</a>
+        </div>
+      </div>
+
+      <!-- 2: テキスタイル -->
+      <div class="col-card">
+        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=800&q=85&fit=crop&crop=center');"></div>
+        <div class="col-body">
+          <p class="col-label">Textile</p>
+          <p class="col-title">テキスタイル<br>コレクション</p>
+          <a href="#" class="link-arrow">ページを見る →</a>
+        </div>
+      </div>
+
+      <!-- 3: 照明 -->
+      <div class="col-card">
+        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=800&q=85&fit=crop&crop=center');"></div>
+        <div class="col-body">
+          <p class="col-label">Lighting</p>
+          <p class="col-title">照明<br>コレクション</p>
+          <a href="#" class="link-arrow">ページを見る →</a>
+        </div>
+      </div>
+
+      <!-- 4: 家具 -->
+      <div class="col-card">
+        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&fit=crop&crop=center');"></div>
+        <div class="col-body">
+          <p class="col-label">Furniture</p>
+          <p class="col-title">家具<br>コレクション</p>
+          <a href="#" class="link-arrow">ページを見る →</a>
+        </div>
+      </div>
+
+      <!-- 5: オブジェ -->
+      <div class="col-card">
+        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1616137466211-f939a420be84?w=800&q=85&fit=crop&crop=center');"></div>
+        <div class="col-body">
+          <p class="col-label">Objects</p>
+          <p class="col-title">オブジェ<br>コレクション</p>
+          <a href="#" class="link-arrow">ページを見る →</a>
+        </div>
+      </div>
+
+    </div>
+    <button class="col-arrow next" id="colNext" aria-label="次へ">
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M4 1.5l5 4.5-5 4.5"/>
+      </svg>
+    </button>
+  </section>
+
+  <!-- ===== カテゴリグリッド 4列 ===== -->
+  <section class="fade-in">
+    <div class="cat-grid">
+      <!-- 家具：広い空間感のある室内写真 -->
+      <div class="cat-tile">
+        <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=700&q=85&fit=crop&crop=center');"></div>
+        <div class="cat-tile-overlay"></div>
+        <div class="cat-tile-info">
+          <p class="cat-tile-name">家具</p>
+          <p class="cat-tile-sub">Furniture →</p>
+        </div>
+      </div>
+      <!-- テキスタイル：テクスチャのある素材感 -->
+      <div class="cat-tile">
+        <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=700&q=85&fit=crop&crop=center');"></div>
+        <div class="cat-tile-overlay"></div>
+        <div class="cat-tile-info">
+          <p class="cat-tile-name">テキスタイル</p>
+          <p class="cat-tile-sub">Textile →</p>
+        </div>
+      </div>
+      <!-- 照明：光のある空間 -->
+      <div class="cat-tile">
+        <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1526040652367-ac003a0475fe?w=700&q=85&fit=crop&crop=center');"></div>
+        <div class="cat-tile-overlay"></div>
+        <div class="cat-tile-info">
+          <p class="cat-tile-name">照明</p>
+          <p class="cat-tile-sub">Lighting →</p>
+        </div>
+      </div>
+      <!-- オブジェ：マーブルトレー -->
+      <div class="cat-tile">
+        <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=700&q=85&fit=crop&crop=center');"></div>
+        <div class="cat-tile-overlay"></div>
+        <div class="cat-tile-info">
+          <p class="cat-tile-name">オブジェ</p>
+          <p class="cat-tile-sub">Objects →</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== プロダクトグリッド 5列 ===== -->
+  <section class="products-sec fade-in">
+    <div class="section-hd">
+      <h2 class="section-ttl">新着アイテム</h2>
+      <a href="#" class="section-more">すべて見る</a>
+    </div>
+    <div class="prod-grid">
+
+      <!-- P1: ラウンジチェア -->
+      <div class="prod-card">
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=600&q=80&fit=crop&crop=center');"></div>
+          <span class="prod-badge">NEW</span>
+          <div class="prod-hover-layer">
+            <button class="prod-add-btn">カートに追加</button>
+          </div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-colors">
+            <span class="cdot on" style="background:#c5b89a;"></span>
+            <span class="cdot" style="background:#2a2826;"></span>
+            <span class="cdot" style="background:#8a7a6a;"></span>
+          </div>
+          <p class="prod-name">ウォールナット材 ラウンジチェア</p>
+          <p class="prod-price">¥148,000</p>
+        </div>
+      </div>
+
+      <!-- P2: リネン クッションカバー -->
+      <div class="prod-card">
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80&fit=crop&crop=center');"></div>
+          <div class="prod-hover-layer">
+            <button class="prod-add-btn">カートに追加</button>
+          </div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-colors">
+            <span class="cdot on" style="background:#e8e0d5;"></span>
+            <span class="cdot" style="background:#b5a898;"></span>
+            <span class="cdot" style="background:#7a8a7a;"></span>
+          </div>
+          <p class="prod-name">リネン クッションカバー</p>
+          <p class="prod-price">¥14,800</p>
+        </div>
+      </div>
+
+      <!-- P3: 磁器製 フラワーベース -->
+      <div class="prod-card">
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=600&q=80&fit=crop&crop=center');"></div>
+          <div class="prod-hover-layer">
+            <button class="prod-add-btn">カートに追加</button>
+          </div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-colors">
+            <span class="cdot on" style="background:#f0ece4;"></span>
+            <span class="cdot" style="background:#d4c8b8;"></span>
+          </div>
+          <p class="prod-name">磁器製 フラワーベース</p>
+          <p class="prod-price">¥28,000</p>
+        </div>
+      </div>
+
+      <!-- P4: ウール ブランケット -->
+      <div class="prod-card">
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=600&q=80&fit=crop&crop=center');"></div>
+          <span class="prod-badge">BESTSELLER</span>
+          <div class="prod-hover-layer">
+            <button class="prod-add-btn">カートに追加</button>
+          </div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-colors">
+            <span class="cdot on" style="background:#c8bcaa;"></span>
+            <span class="cdot" style="background:#8a8680;"></span>
+            <span class="cdot" style="background:#3a3028;"></span>
+          </div>
+          <p class="prod-name">ウール ブランケット</p>
+          <p class="prod-price">¥42,000</p>
+        </div>
+      </div>
+
+      <!-- P5: 真鍮製 フロアランプ -->
+      <div class="prod-card">
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=600&q=80&fit=crop&crop=center');"></div>
+          <div class="prod-hover-layer">
+            <button class="prod-add-btn">カートに追加</button>
+          </div>
+        </div>
+        <div class="prod-body">
+          <div class="prod-colors">
+            <span class="cdot on" style="background:#c8a86a;"></span>
+            <span class="cdot" style="background:#2a2826;"></span>
+          </div>
+          <p class="prod-name">真鍮製 フロアランプ</p>
+          <p class="prod-price">¥88,000</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===== マガジン ===== -->
+  <section class="magazine-sec fade-in">
+    <div class="section-hd">
+      <h2 class="section-ttl">ÉPURE マガジン</h2>
+      <a href="#" class="section-more">すべての記事</a>
+    </div>
+    <div class="mag-tags">
+      <button class="mag-tag on">#すべて</button>
+      <button class="mag-tag">#インテリア</button>
+      <button class="mag-tag">#テキスタイル</button>
+      <button class="mag-tag">#職人</button>
+      <button class="mag-tag">#暮らし</button>
+      <button class="mag-tag">#コレクション</button>
+    </div>
+    <div class="mag-grid">
+      <div class="art-card">
+        <div class="art-img-wrap">
+          <div class="art-img" style="background-image: url('https://images.unsplash.com/photo-1526040652367-ac003a0475fe?w=800&q=80&fit=crop&crop=center');"></div>
+        </div>
+        <div class="art-body">
+          <p class="art-tag">#職人</p>
+          <p class="art-title">手仕事の哲学——素材と向き合う、職人たちの時間</p>
+          <p class="art-date">2026.04.15</p>
+        </div>
+      </div>
+      <div class="art-card">
+        <div class="art-img-wrap">
+          <div class="art-img" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fit=crop&crop=center');"></div>
+        </div>
+        <div class="art-body">
+          <p class="art-tag">#インテリア</p>
+          <p class="art-title">余白のある部屋——ミニマルな空間が生む、静かな豊かさ</p>
+          <p class="art-date">2026.03.28</p>
+        </div>
+      </div>
+      <div class="art-card">
+        <div class="art-img-wrap">
+          <div class="art-img" style="background-image: url('https://images.unsplash.com/photo-1537726235470-8504e3beef77?w=800&q=80&fit=crop&crop=center');"></div>
+        </div>
+        <div class="art-body">
+          <p class="art-tag">#テキスタイル</p>
+          <p class="art-title">リネンの記憶——洗うたびに深まる、素材との対話</p>
+          <p class="art-date">2026.03.10</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ライフスタイル タイル 4列（正方形・エディトリアル）===== -->
+  <section class="fade-in">
+    <div class="ls-grid">
+      <div class="ls-tile">
+        <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=700&q=85&fit=crop&crop=center');"></div>
+        <div class="ls-overlay">
+          <p class="ls-name">Atelier</p>
+          <p class="ls-sub">アトリエについて →</p>
+        </div>
+      </div>
+      <div class="ls-tile">
+        <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1616137466211-f939a420be84?w=700&q=85&fit=crop&crop=center');"></div>
+        <div class="ls-overlay">
+          <p class="ls-name">Collection</p>
+          <p class="ls-sub">最新コレクション →</p>
+        </div>
+      </div>
+      <div class="ls-tile">
+        <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1517705008128-361805f42e86?w=700&q=85&fit=crop&crop=center');"></div>
+        <div class="ls-overlay">
+          <p class="ls-name">Savoir-Faire</p>
+          <p class="ls-sub">職人の技術 →</p>
+        </div>
+      </div>
+      <div class="ls-tile">
+        <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=85&fit=crop&crop=center');"></div>
+        <div class="ls-overlay">
+          <p class="ls-name">Store</p>
+          <p class="ls-sub">店舗情報 →</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== ブランドストーリー ===== -->
+  <section class="story-sec fade-in">
+    <div class="story-text">
+      <p class="story-label">ÉPURE について</p>
+      <h2 class="story-heading">削ぎ落とした先に<br>宿る美しさ</h2>
+      <p class="story-body">
+        ÉPUREは、フランス語で「本質だけを残した」を意味する言葉。<br>
+        必要なものだけを残し、余分なものを削ぎ落としたとき、<br>
+        素材が本来持つ美しさが、静かに浮かびあがってきます。<br><br>
+        東京・南青山とパリのアトリエで、熟練の職人たちが<br>
+        一点一点、丁寧に手がけた作品をお届けします。
+      </p>
+      <a href="#" class="link-arrow">ブランドストーリーを読む →</a>
+    </div>
+    <div class="story-img" style="background-image: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1000&q=85&fit=crop&crop=center');"></div>
+  </section>
+
+  <!-- ===== ストア案内 ===== -->
+  <section class="boutique-sec fade-in">
+    <div class="boutique-img" style="background-image: url('https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=1000&q=85&fit=crop&crop=center');"></div>
+    <div class="boutique-text">
+      <p class="story-label">ストア</p>
+      <h2 class="story-heading">空間そのものが、<br>作品である</h2>
+      <p class="story-body">
+        東京・南青山の旗艦店は、ブランドのフィロソフィーを<br>
+        体現した空間です。素材の手触り、光の差し込み方、<br>
+        静寂の中に漂う香り——すべてが、ÉPUREの世界観を<br>
+        体験できるよう設計されています。<br><br>
+        Mon – Sat &nbsp;11:00 – 20:00 &nbsp;/&nbsp; Sun &nbsp;12:00 – 18:00
+      </p>
+      <a href="#" class="link-arrow">店舗情報を見る →</a>
+    </div>
+  </section>
+
+  <!-- ===== ニュースレター ===== -->
+  <section class="newsletter-sec fade-in">
+    <p class="nl-label">Newsletter</p>
+    <h2 class="nl-heading">新着情報を、いち早く</h2>
+    <p class="nl-sub">コレクションの先行情報・限定イベントのご案内をお届けします</p>
+    <form class="nl-form" onsubmit="return false;">
+      <input class="nl-input" type="email" placeholder="メールアドレスを入力" />
+      <button class="nl-btn" type="submit">登録する</button>
+    </form>
+    <p class="nl-note">プライバシーポリシーに同意の上、ご登録ください。いつでも配信停止できます。</p>
+  </section>
+
+  <!-- ===== フッター ===== -->
+  <footer class="site-footer">
+    <div class="footer-cols">
+      <div class="footer-col">
+        <p class="footer-col-ttl">サポート</p>
+        <ul>
+          <li><a href="#">お問い合わせ</a></li>
+          <li><a href="#">返品・交換について</a></li>
+          <li><a href="#">配送について</a></li>
+          <li><a href="#">お支払い方法</a></li>
+          <li><a href="#">よくある質問</a></li>
+          <li><a href="#">店舗一覧</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-ttl">インフォメーション</p>
+        <ul>
+          <li><a href="#">特定商取引法に基づく表記</a></li>
+          <li><a href="#">プライバシーポリシー</a></li>
+          <li><a href="#">利用規約</a></li>
+          <li><a href="#">クッキーポリシー</a></li>
+          <li><a href="#">サイトマップ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <p class="footer-col-ttl">ブランド</p>
+        <ul>
+          <li><a href="#">ブランドについて</a></li>
+          <li><a href="#">アトリエ</a></li>
+          <li><a href="#">職人・素材へのこだわり</a></li>
+          <li><a href="#">採用情報</a></li>
+          <li><a href="#">プレスリリース</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-logo">É P U R E</div>
+      <div class="footer-sns">
+        <a href="#">Instagram</a>
+        <a href="#">Pinterest</a>
+        <a href="#">Twitter</a>
+        <a href="#">LINE</a>
+      </div>
+      <p class="footer-copy">© 2026 ÉPURE. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ===== コレクションスライダー ===== */
+    const colTrack = document.getElementById('colTrack');
+    const prevBtn  = document.getElementById('colPrev');
+    const nextBtn  = document.getElementById('colNext');
+
+    /* カード1枚分の幅（gap1px込み）を返す */
+    function getCardW() {
+      const c = colTrack.querySelector('.col-card');
+      return c ? c.offsetWidth + 1 : 427;
+    }
+
+    /* 矢印の表示/非表示を更新 */
+    function updateArrows() {
+      const atStart = colTrack.scrollLeft <= 4;
+      const atEnd   = colTrack.scrollLeft + colTrack.clientWidth >= colTrack.scrollWidth - 4;
+      prevBtn.style.opacity = atStart ? '0' : '1';
+      prevBtn.style.pointerEvents = atStart ? 'none' : 'auto';
+      nextBtn.style.opacity = atEnd   ? '0' : '1';
+      nextBtn.style.pointerEvents = atEnd   ? 'none' : 'auto';
+      updateDots();
+    }
+
+    nextBtn.addEventListener('click', () => {
+      colTrack.scrollBy({ left: getCardW(), behavior: 'smooth' });
+    });
+    prevBtn.addEventListener('click', () => {
+      colTrack.scrollBy({ left: -getCardW(), behavior: 'smooth' });
+    });
+    colTrack.addEventListener('scroll', updateArrows, { passive: true });
+
+    /* ドットインジケーター */
+    const TOTAL_CARDS = colTrack.querySelectorAll('.col-card').length;
+    const VISIBLE = 3; /* 同時表示枚数 */
+    const dotWrap = document.createElement('div');
+    dotWrap.style.cssText = 'display:flex;justify-content:center;gap:7px;padding:14px 0 4px;';
+    const dots = [];
+    for (let i = 0; i < TOTAL_CARDS - VISIBLE + 1; i++) {
+      const d = document.createElement('span');
+      d.style.cssText = 'width:5px;height:5px;border-radius:50%;background:var(--warm);transition:background 0.3s,transform 0.3s;cursor:pointer;';
+      d.addEventListener('click', () => {
+        colTrack.scrollTo({ left: getCardW() * i, behavior: 'smooth' });
+      });
+      dotWrap.appendChild(d);
+      dots.push(d);
+    }
+    colTrack.parentElement.appendChild(dotWrap);
+
+    function updateDots() {
+      const idx = Math.round(colTrack.scrollLeft / Math.max(getCardW(), 1));
+      dots.forEach((d, i) => {
+        const active = i === Math.min(idx, dots.length - 1);
+        d.style.background = active ? 'var(--dark)' : 'var(--warm)';
+        d.style.transform   = active ? 'scale(1.3)' : 'scale(1)';
+      });
+    }
+
+    /* 初期化 */
+    prevBtn.style.opacity = '0';
+    prevBtn.style.pointerEvents = 'none';
+    updateDots();
+
+    /* ===== マガジンタグ切り替え ===== */
+    document.querySelectorAll('.mag-tag').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.mag-tag').forEach(b => b.classList.remove('on'));
+        btn.classList.add('on');
+      });
+    });
+
+    /* ===== カラードット選択 ===== */
+    document.querySelectorAll('.prod-colors').forEach(group => {
+      group.querySelectorAll('.cdot').forEach(dot => {
+        dot.addEventListener('click', () => {
+          group.querySelectorAll('.cdot').forEach(d => d.classList.remove('on'));
+          dot.classList.add('on');
+        });
+      });
+    });
+
+    /* ===== ナビ アクティブ切り替え ===== */
+    document.querySelectorAll('.main-nav a').forEach(a => {
+      a.addEventListener('click', e => {
+        e.preventDefault();
+        document.querySelectorAll('.main-nav a').forEach(l => l.classList.remove('on'));
+        a.classList.add('on');
+      });
+    });
+
+    /* ===== フェードイン（IntersectionObserver）===== */
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.06 });
+
+    document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+  </script>
+</body>
+</html>
