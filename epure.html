@@ -762,6 +762,157 @@
       letter-spacing: 0.08em;
     }
 
+    /* ===== ヒーローセクション（Figma設計準拠：1440×820 / 左580テキスト + 右860画像）===== */
+    .hero-sec {
+      display: grid;
+      grid-template-columns: 580px 1fr;
+      height: calc(100vh - 90px);
+      min-height: 640px;
+      max-height: 860px;
+      overflow: hidden;
+    }
+    /* 左：テキストパネル */
+    .hero-text {
+      background: var(--cream);
+      display: flex;
+      flex-direction: column;
+      padding: 80px 80px 60px;
+      position: relative;
+      border-right: 1px solid var(--warm);
+    }
+    /* ブランドラベル */
+    .hero-brand-lbl {
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 4px;
+      color: var(--gray);
+    }
+    /* ラベル下の短い横線 */
+    .hero-brand-rule {
+      width: 40px;
+      height: 1px;
+      background: var(--warm);
+      margin: 14px 0 0;
+      flex-shrink: 0;
+    }
+    /* コレクションラベル */
+    .hero-col-lbl {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 2.5px;
+      color: var(--gray);
+      text-transform: uppercase;
+      margin-top: auto;
+      padding-top: 60px;
+    }
+    /* メインヘッドライン */
+    .hero-headline {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 62px;
+      font-weight: 300;
+      line-height: 1.12;
+      letter-spacing: -0.5px;
+      color: var(--black);
+      margin-top: 18px;
+    }
+    .hero-headline em { font-style: italic; }
+    /* サブテキスト */
+    .hero-body {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      line-height: 1.85;
+      letter-spacing: 0.3px;
+      color: var(--gray);
+      margin-top: 36px;
+    }
+    /* CTAリンク */
+    .hero-cta {
+      display: inline-block;
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 1.8px;
+      color: var(--dark);
+      text-transform: uppercase;
+      margin-top: 44px;
+      padding-bottom: 5px;
+      border-bottom: 0.75px solid var(--dark);
+      transition: opacity 0.25s;
+      align-self: flex-start;
+    }
+    .hero-cta:hover { opacity: 0.5; }
+    /* スライド番号インジケーター */
+    .hero-indicator {
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: var(--gray);
+      position: absolute;
+      bottom: 60px;
+      left: 80px;
+    }
+    /* 右：画像パネル */
+    .hero-img {
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    /* 左縁の微細グラデーションオーバーレイ */
+    .hero-img::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(15,14,13,0.10) 0%, transparent 28%);
+      z-index: 1;
+      pointer-events: none;
+    }
+    /* ホバーで画像をわずかに拡大 */
+    .hero-sec:hover .hero-img { transform: scale(1.018); }
+
+    /* ===== ヒーロー レスポンシブ ===== */
+    @media (max-width: 1100px) {
+      .hero-sec { grid-template-columns: 500px 1fr; }
+      .hero-headline { font-size: 52px; }
+      .hero-text { padding: 72px 64px 56px; }
+      .hero-indicator { left: 64px; }
+    }
+    @media (max-width: 1024px) {
+      .hero-sec {
+        grid-template-columns: 1fr;
+        height: auto;
+        max-height: none;
+      }
+      .hero-img {
+        aspect-ratio: 4 / 3;
+        order: -1; /* 画像を上に */
+      }
+      .hero-text {
+        padding: 48px 44px 60px;
+        border-right: none;
+        border-top: 1px solid var(--warm);
+      }
+      .hero-headline { font-size: 46px; }
+      .hero-col-lbl { margin-top: 0; padding-top: 0; }
+      .hero-indicator { position: static; margin-top: 44px; }
+    }
+    @media (max-width: 768px) {
+      .hero-headline { font-size: 38px; }
+      .hero-text { padding: 40px 32px 52px; }
+    }
+    @media (max-width: 480px) {
+      .hero-headline { font-size: 32px; }
+      .hero-text { padding: 36px 24px 48px; }
+      .hero-brand-lbl { display: none; }
+      .hero-brand-rule { display: none; }
+      .hero-indicator { display: none; }
+    }
+
     /* ===== フェードイン アニメーション ===== */
     .fade-in {
       opacity: 0;
@@ -867,6 +1018,22 @@
       <a href="#">店舗</a>
     </nav>
   </header>
+
+  <!-- ===== ヒーローセクション（Figma設計準拠：1440×820 / 左580テキスト + 右860画像）===== -->
+  <section class="hero-sec">
+    <!-- 左：テキストパネル -->
+    <div class="hero-text">
+      <span class="hero-brand-lbl">É P U R E</span>
+      <div class="hero-brand-rule"></div>
+      <p class="hero-col-lbl">SS 2026 — Nouvelle Collection</p>
+      <h1 class="hero-headline">The Beauty<br><em>of Pure Form.</em></h1>
+      <p class="hero-body">余分なものを削ぎ落としたとき、<br>素材が本来持つ美しさが、<br>静かに浮かびあがってきます。</p>
+      <a href="#" class="hero-cta">コレクションを見る →</a>
+      <span class="hero-indicator">01 / 03</span>
+    </div>
+    <!-- 右：エディトリアル画像 -->
+    <div class="hero-img" style="background-image: url('https://images.unsplash.com/photo-1600210492493-0946911123ea?w=1400&q=90&fit=crop&crop=center');"></div>
+  </section>
 
   <!-- ===== コレクション スライダー ===== -->
   <!-- A.P.C.スタイル：全カード均一幅33%・縦長ポートレート・5枚横スクロール -->
