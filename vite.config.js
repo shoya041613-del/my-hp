@@ -1,8 +1,14 @@
 import { defineConfig } from 'vite';
 
-// Vite 開発サーバーの設定
-// /api/* へのリクエストを Express バックエンド（ポート3001）にプロキシする
+// Vite 設定
+// - ビルドエントリ: index.html（ÉPUREメインページ）
+// - 開発時: /api/* を Express バックエンド（port 3001）にプロキシ
 export default defineConfig({
+  build: {
+    rollupOptions: {
+      input: 'index.html',
+    },
+  },
   server: {
     port: 5173,
     proxy: {
