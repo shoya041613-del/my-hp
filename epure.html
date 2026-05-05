@@ -99,6 +99,8 @@
     }
     .header-util-left a { transition: color 0.2s; }
     .header-util-left a:hover { color: var(--black); }
+    /* 現在の言語をハイライト */
+    .lang-btn.lang-active { color: var(--dark); font-weight: 500; }
     .header-util-sep { color: var(--light); font-size: 12px; }
     .header-logo-center {
       font-family: 'Cormorant Garamond', serif;
@@ -280,6 +282,9 @@
       overflow: hidden;
       aspect-ratio: 2 / 3;
       cursor: pointer;
+      display: block;       /* <a>タグでもブロック表示 */
+      text-decoration: none;
+      color: inherit;
     }
     .cat-tile-bg {
       width: 100%;
@@ -364,7 +369,12 @@
       grid-template-columns: repeat(5, 1fr);
       gap: 2px;
     }
-    .prod-card { cursor: pointer; }
+    .prod-card {
+      cursor: pointer;
+      display: block;         /* <a>タグ対応 */
+      text-decoration: none;
+      color: inherit;
+    }
     .prod-img-wrap {
       position: relative;
       overflow: hidden;
@@ -490,6 +500,9 @@
       background: var(--white);
       overflow: hidden;
       cursor: pointer;
+      display: block;         /* <a>タグ対応 */
+      text-decoration: none;
+      color: inherit;
     }
     .art-img-wrap {
       aspect-ratio: 4 / 3;
@@ -855,9 +868,7 @@
       font-weight: 300;
       letter-spacing: 2px;
       color: var(--gray);
-      position: absolute;
-      bottom: 60px;
-      left: 80px;
+      margin-top: 28px;
     }
     /* 右：画像パネル */
     .hero-img {
@@ -1097,29 +1108,29 @@
   <header class="site-header">
     <div class="header-logo-row">
       <div class="header-util-left">
-        <a href="#">JP</a>
+        <a href="javascript:void(0)" class="lang-btn lang-active">JP</a>
         <span class="header-util-sep">|</span>
-        <a href="#">EN</a>
+        <a href="javascript:void(0)" class="lang-btn">EN</a>
       </div>
       <div class="header-logo-center">
         <a href="epure.html">É P U R E</a>
       </div>
       <div class="header-util-right">
-        <a href="#">アカウント</a>
-        <a href="#" class="cart-link">
+        <a href="javascript:void(0)">アカウント</a>
+        <a href="javascript:void(0)" class="cart-link">
           カート
           <span class="cart-badge">0</span>
         </a>
       </div>
     </div>
     <nav class="main-nav">
-      <a href="#" class="on">家具</a>
-      <a href="#">テキスタイル</a>
-      <a href="#">照明</a>
-      <a href="#">キッチン</a>
-      <a href="#">オブジェ</a>
-      <a href="#">ブランド</a>
-      <a href="#">店舗</a>
+      <a href="#categories" class="on">家具</a>
+      <a href="#categories">テキスタイル</a>
+      <a href="#categories">照明</a>
+      <a href="#categories">キッチン</a>
+      <a href="#categories">オブジェ</a>
+      <a href="#brand">ブランド</a>
+      <a href="#store">店舗</a>
     </nav>
   </header>
 
@@ -1132,7 +1143,7 @@
       <p class="hero-col-lbl">SS 2026 — Nouvelle Collection</p>
       <h1 class="hero-headline">the one<br><em>and only.</em></h1>
       <p class="hero-body">余分なものを削ぎ落としたとき、<br>素材が本来持つ美しさが、<br>静かに浮かびあがってきます。</p>
-      <a href="#" class="hero-cta">コレクションを見る →</a>
+      <a href="#collection" class="hero-cta">コレクションを見る →</a>
       <span class="hero-indicator">01 / 03</span>
     </div>
     <!-- 右：エディトリアル画像 + スクロールインジケーター -->
@@ -1146,7 +1157,7 @@
 
   <!-- ===== コレクション スライダー ===== -->
   <!-- A.P.C.スタイル：全カード均一幅33%・縦長ポートレート・5枚横スクロール -->
-  <section class="col-slider">
+  <section class="col-slider" id="collection">
     <button class="col-arrow prev" id="colPrev" aria-label="前へ">
       <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
         <path d="M8 1.5L3 6l5 4.5"/>
@@ -1160,7 +1171,7 @@
         <div class="col-body">
           <p class="col-label">2026 Spring / Summer</p>
           <p class="col-title">新しい静謐。<br>SS2026 コレクション</p>
-          <a href="#" class="link-arrow">コレクションを見る →</a>
+          <a href="#products" class="link-arrow">コレクションを見る →</a>
         </div>
       </div>
 
@@ -1170,7 +1181,7 @@
         <div class="col-body">
           <p class="col-label">Textile</p>
           <p class="col-title">テキスタイル<br>コレクション</p>
-          <a href="#" class="link-arrow">ページを見る →</a>
+          <a href="#categories" class="link-arrow">ページを見る →</a>
         </div>
       </div>
 
@@ -1180,7 +1191,7 @@
         <div class="col-body">
           <p class="col-label">Lighting</p>
           <p class="col-title">照明<br>コレクション</p>
-          <a href="#" class="link-arrow">ページを見る →</a>
+          <a href="#categories" class="link-arrow">ページを見る →</a>
         </div>
       </div>
 
@@ -1190,7 +1201,7 @@
         <div class="col-body">
           <p class="col-label">Furniture</p>
           <p class="col-title">家具<br>コレクション</p>
-          <a href="#" class="link-arrow">ページを見る →</a>
+          <a href="#categories" class="link-arrow">ページを見る →</a>
         </div>
       </div>
 
@@ -1200,7 +1211,7 @@
         <div class="col-body">
           <p class="col-label">Objects</p>
           <p class="col-title">オブジェ<br>コレクション</p>
-          <a href="#" class="link-arrow">ページを見る →</a>
+          <a href="#categories" class="link-arrow">ページを見る →</a>
         </div>
       </div>
 
@@ -1213,57 +1224,57 @@
   </section>
 
   <!-- ===== カテゴリグリッド 4列 ===== -->
-  <section class="fade-in">
+  <section class="fade-in" id="categories">
     <div class="cat-grid">
       <!-- 家具：広い空間感のある室内写真 -->
-      <div class="cat-tile">
+      <a href="#products" class="cat-tile">
         <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=700&q=85&fit=crop&crop=center');"></div>
         <div class="cat-tile-overlay"></div>
         <div class="cat-tile-info">
           <p class="cat-tile-name">家具</p>
           <p class="cat-tile-sub">Furniture →</p>
         </div>
-      </div>
+      </a>
       <!-- テキスタイル：テクスチャのある素材感 -->
-      <div class="cat-tile">
+      <a href="#products" class="cat-tile">
         <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=700&q=85&fit=crop&crop=center');"></div>
         <div class="cat-tile-overlay"></div>
         <div class="cat-tile-info">
           <p class="cat-tile-name">テキスタイル</p>
           <p class="cat-tile-sub">Textile →</p>
         </div>
-      </div>
+      </a>
       <!-- 照明：光のある空間 -->
-      <div class="cat-tile">
+      <a href="#products" class="cat-tile">
         <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1526040652367-ac003a0475fe?w=700&q=85&fit=crop&crop=center');"></div>
         <div class="cat-tile-overlay"></div>
         <div class="cat-tile-info">
           <p class="cat-tile-name">照明</p>
           <p class="cat-tile-sub">Lighting →</p>
         </div>
-      </div>
+      </a>
       <!-- オブジェ：マーブルトレー -->
-      <div class="cat-tile">
+      <a href="#products" class="cat-tile">
         <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=700&q=85&fit=crop&crop=center');"></div>
         <div class="cat-tile-overlay"></div>
         <div class="cat-tile-info">
           <p class="cat-tile-name">オブジェ</p>
           <p class="cat-tile-sub">Objects →</p>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 
   <!-- ===== プロダクトグリッド 5列 ===== -->
-  <section class="products-sec fade-in">
+  <section class="products-sec fade-in" id="products">
     <div class="section-hd">
       <h2 class="section-ttl">新着アイテム</h2>
-      <a href="#" class="section-more">すべて見る</a>
+      <a href="#categories" class="section-more">すべて見る</a>
     </div>
     <div class="prod-grid">
 
       <!-- P1: ラウンジチェア -->
-      <div class="prod-card">
+      <a href="#products" class="prod-card">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&q=80&fit=crop&crop=center');"></div>
           <span class="prod-badge">NEW</span>
@@ -1280,10 +1291,10 @@
           <p class="prod-name">ウォールナット材 ラウンジチェア</p>
           <p class="prod-price">¥148,000</p>
         </div>
-      </div>
+      </a>
 
       <!-- P2: リネン クッションカバー -->
-      <div class="prod-card">
+      <a href="#products" class="prod-card">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80&fit=crop&crop=center');"></div>
           <div class="prod-hover-layer">
@@ -1299,10 +1310,10 @@
           <p class="prod-name">リネン クッションカバー</p>
           <p class="prod-price">¥14,800</p>
         </div>
-      </div>
+      </a>
 
       <!-- P3: 磁器製 フラワーベース -->
-      <div class="prod-card">
+      <a href="#products" class="prod-card">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=600&q=80&fit=crop&crop=center');"></div>
           <div class="prod-hover-layer">
@@ -1317,10 +1328,10 @@
           <p class="prod-name">磁器製 フラワーベース</p>
           <p class="prod-price">¥28,000</p>
         </div>
-      </div>
+      </a>
 
       <!-- P4: ウール ブランケット -->
-      <div class="prod-card">
+      <a href="#products" class="prod-card">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=600&q=80&fit=crop&crop=center');"></div>
           <span class="prod-badge">BESTSELLER</span>
@@ -1337,10 +1348,10 @@
           <p class="prod-name">ウール ブランケット</p>
           <p class="prod-price">¥42,000</p>
         </div>
-      </div>
+      </a>
 
       <!-- P5: 真鍮製 フロアランプ -->
-      <div class="prod-card">
+      <a href="#products" class="prod-card">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=600&q=80&fit=crop&crop=center');"></div>
           <div class="prod-hover-layer">
@@ -1355,16 +1366,16 @@
           <p class="prod-name">真鍮製 フロアランプ</p>
           <p class="prod-price">¥88,000</p>
         </div>
-      </div>
+      </a>
 
     </div>
   </section>
 
   <!-- ===== マガジン ===== -->
-  <section class="magazine-sec fade-in">
+  <section class="magazine-sec fade-in" id="magazine">
     <div class="section-hd">
       <h2 class="section-ttl">ÉPURE マガジン</h2>
-      <a href="#" class="section-more">すべての記事</a>
+      <a href="#magazine" class="section-more">すべての記事</a>
     </div>
     <div class="mag-tags">
       <button class="mag-tag on">#すべて</button>
@@ -1375,7 +1386,7 @@
       <button class="mag-tag">#コレクション</button>
     </div>
     <div class="mag-grid">
-      <div class="art-card">
+      <a href="#magazine" class="art-card">
         <div class="art-img-wrap">
           <div class="art-img" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&fit=crop&crop=center');"></div>
         </div>
@@ -1384,8 +1395,8 @@
           <p class="art-title">手仕事の哲学——素材と向き合う、職人たちの時間</p>
           <p class="art-date">2026.04.15</p>
         </div>
-      </div>
-      <div class="art-card">
+      </a>
+      <a href="#magazine" class="art-card">
         <div class="art-img-wrap">
           <div class="art-img" style="background-image: url('https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=800&q=80&fit=crop&crop=center');"></div>
         </div>
@@ -1394,8 +1405,8 @@
           <p class="art-title">余白のある部屋——ミニマルな空間が生む、静かな豊かさ</p>
           <p class="art-date">2026.03.28</p>
         </div>
-      </div>
-      <div class="art-card">
+      </a>
+      <a href="#magazine" class="art-card">
         <div class="art-img-wrap">
           <div class="art-img" style="background-image: url('https://images.unsplash.com/photo-1537726235470-8504e3beef77?w=800&q=80&fit=crop&crop=center');"></div>
         </div>
@@ -1404,46 +1415,46 @@
           <p class="art-title">リネンの記憶——洗うたびに深まる、素材との対話</p>
           <p class="art-date">2026.03.10</p>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 
   <!-- ===== ライフスタイル タイル 4列（正方形・エディトリアル）===== -->
-  <section class="fade-in">
+  <section class="fade-in" id="lifestyle">
     <div class="ls-grid">
-      <div class="ls-tile">
+      <a href="#lifestyle" class="ls-tile">
         <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=700&q=85&fit=crop&crop=center');"></div>
         <div class="ls-overlay">
           <p class="ls-name">Atelier</p>
           <p class="ls-sub">アトリエについて →</p>
         </div>
-      </div>
-      <div class="ls-tile">
+      </a>
+      <a href="#collection" class="ls-tile">
         <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=85&fit=crop&crop=center');"></div>
         <div class="ls-overlay">
           <p class="ls-name">Collection</p>
           <p class="ls-sub">最新コレクション →</p>
         </div>
-      </div>
-      <div class="ls-tile">
+      </a>
+      <a href="#brand" class="ls-tile">
         <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1517705008128-361805f42e86?w=700&q=85&fit=crop&crop=center');"></div>
         <div class="ls-overlay">
           <p class="ls-name">Savoir-Faire</p>
           <p class="ls-sub">職人の技術 →</p>
         </div>
-      </div>
-      <div class="ls-tile">
+      </a>
+      <a href="#store" class="ls-tile">
         <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=85&fit=crop&crop=center');"></div>
         <div class="ls-overlay">
           <p class="ls-name">Store</p>
           <p class="ls-sub">店舗情報 →</p>
         </div>
-      </div>
+      </a>
     </div>
   </section>
 
   <!-- ===== ブランドストーリー ===== -->
-  <section class="story-sec fade-in">
+  <section class="story-sec fade-in" id="brand">
     <div class="story-text">
       <p class="story-label">ÉPURE について</p>
       <h2 class="story-heading">削ぎ落とした先に<br>宿る美しさ</h2>
@@ -1454,13 +1465,13 @@
         東京・南青山とパリのアトリエで、熟練の職人たちが<br>
         一点一点、丁寧に手がけた作品をお届けします。
       </p>
-      <a href="#" class="link-arrow">ブランドストーリーを読む →</a>
+      <a href="#brand" class="link-arrow">ブランドストーリーを読む →</a>
     </div>
     <div class="story-img" style="background-image: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1000&q=85&fit=crop&crop=center');"></div>
   </section>
 
   <!-- ===== ストア案内 ===== -->
-  <section class="boutique-sec fade-in">
+  <section class="boutique-sec fade-in" id="store">
     <div class="boutique-img" style="background-image: url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=1000&q=85&fit=crop&crop=center');"></div>
     <div class="boutique-text">
       <p class="story-label">ストア</p>
@@ -1472,12 +1483,12 @@
         体験できるよう設計されています。<br><br>
         Mon – Sat &nbsp;11:00 – 20:00 &nbsp;/&nbsp; Sun &nbsp;12:00 – 18:00
       </p>
-      <a href="#" class="link-arrow">店舗情報を見る →</a>
+      <a href="#store" class="link-arrow">店舗情報を見る →</a>
     </div>
   </section>
 
   <!-- ===== ニュースレター ===== -->
-  <section class="newsletter-sec fade-in">
+  <section class="newsletter-sec fade-in" id="newsletter">
     <p class="nl-label">Newsletter</p>
     <h2 class="nl-heading">新着情報を、いち早く</h2>
     <p class="nl-sub">コレクションの先行情報・限定イベントのご案内をお届けします</p>
@@ -1494,42 +1505,42 @@
       <div class="footer-col">
         <p class="footer-col-ttl">サポート</p>
         <ul>
-          <li><a href="#">お問い合わせ</a></li>
-          <li><a href="#">返品・交換について</a></li>
-          <li><a href="#">配送について</a></li>
-          <li><a href="#">お支払い方法</a></li>
-          <li><a href="#">よくある質問</a></li>
-          <li><a href="#">店舗一覧</a></li>
+          <li><a href="#newsletter">お問い合わせ</a></li>
+          <li><a href="#newsletter">返品・交換について</a></li>
+          <li><a href="#newsletter">配送について</a></li>
+          <li><a href="#newsletter">お支払い方法</a></li>
+          <li><a href="#newsletter">よくある質問</a></li>
+          <li><a href="#store">店舗一覧</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <p class="footer-col-ttl">インフォメーション</p>
         <ul>
-          <li><a href="#">特定商取引法に基づく表記</a></li>
-          <li><a href="#">プライバシーポリシー</a></li>
-          <li><a href="#">利用規約</a></li>
-          <li><a href="#">クッキーポリシー</a></li>
-          <li><a href="#">サイトマップ</a></li>
+          <li><a href="javascript:void(0)">特定商取引法に基づく表記</a></li>
+          <li><a href="javascript:void(0)">プライバシーポリシー</a></li>
+          <li><a href="javascript:void(0)">利用規約</a></li>
+          <li><a href="javascript:void(0)">クッキーポリシー</a></li>
+          <li><a href="javascript:void(0)">サイトマップ</a></li>
         </ul>
       </div>
       <div class="footer-col">
         <p class="footer-col-ttl">ブランド</p>
         <ul>
-          <li><a href="#">ブランドについて</a></li>
-          <li><a href="#">アトリエ</a></li>
-          <li><a href="#">職人・素材へのこだわり</a></li>
-          <li><a href="#">採用情報</a></li>
-          <li><a href="#">プレスリリース</a></li>
+          <li><a href="#brand">ブランドについて</a></li>
+          <li><a href="#lifestyle">アトリエ</a></li>
+          <li><a href="#brand">職人・素材へのこだわり</a></li>
+          <li><a href="#newsletter">採用情報</a></li>
+          <li><a href="#newsletter">プレスリリース</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-bottom">
       <div class="footer-logo">É P U R E</div>
       <div class="footer-sns">
-        <a href="#">Instagram</a>
-        <a href="#">Pinterest</a>
-        <a href="#">Twitter</a>
-        <a href="#">LINE</a>
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://www.pinterest.jp/" target="_blank" rel="noopener">Pinterest</a>
+        <a href="https://x.com/" target="_blank" rel="noopener">X (Twitter)</a>
+        <a href="https://line.me/" target="_blank" rel="noopener">LINE</a>
       </div>
       <p class="footer-copy">© 2026 ÉPURE. All rights reserved.</p>
     </div>
@@ -1622,13 +1633,49 @@
       });
     });
 
-    /* ===== ナビ アクティブ切り替え ===== */
-    document.querySelectorAll('.main-nav a').forEach(a => {
+    /* ===== ナビ アクティブ切り替え（スクロール連動）===== */
+    const navLinks = document.querySelectorAll('.main-nav a');
+
+    // クリック時：スムーズスクロール + 即座にアクティブ反映
+    navLinks.forEach(a => {
       a.addEventListener('click', e => {
-        e.preventDefault();
-        document.querySelectorAll('.main-nav a').forEach(l => l.classList.remove('on'));
-        a.classList.add('on');
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth' });
+          navLinks.forEach(l => l.classList.remove('on'));
+          a.classList.add('on');
+        }
       });
+    });
+
+    // スクロール監視：現在のセクションに対応するナビをハイライト
+    const sectionMap = {
+      'collection': 0,   // 家具（先頭）
+      'categories': 0,   // 家具
+      'products':   0,   // 家具
+      'magazine':   0,   // 家具（マガジンはナビ非対応のため最近傍）
+      'lifestyle':  0,
+      'brand':      5,   // ブランド（5番目リンク）
+      'store':      6,   // 店舗（6番目リンク）
+      'newsletter': 6,
+    };
+    const ioNav = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          const idx = sectionMap[id];
+          if (idx !== undefined) {
+            navLinks.forEach(l => l.classList.remove('on'));
+            if (navLinks[idx]) navLinks[idx].classList.add('on');
+          }
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' });
+
+    ['collection','categories','products','brand','store'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) ioNav.observe(el);
     });
 
     /* ===== スライダー スワイプ対応（タッチ）===== */
