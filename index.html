@@ -2550,5 +2550,504 @@
     // 初期バッジ反映
     updateCartBadge();
   </script>
+
+  <!-- ===== ÉPURE コンシェルジュ チャットウィジェット ===== -->
+  <style>
+    /* ---- フローティングボタン ---- */
+    .chat-fab {
+      position: fixed;
+      bottom: 32px;
+      right: 32px;
+      z-index: 9000;
+      width: 52px;
+      height: 52px;
+      background: var(--dark);
+      color: var(--cream);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.25s, transform 0.25s;
+      box-shadow: 0 4px 20px rgba(15,14,13,0.18);
+    }
+    .chat-fab:hover {
+      background: var(--black);
+      transform: translateY(-2px);
+    }
+    /* アイコン SVG */
+    .chat-fab svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+    /* ---- チャットドロワー ---- */
+    .chat-drawer {
+      position: fixed;
+      bottom: 96px;
+      right: 32px;
+      z-index: 8999;
+      width: 360px;
+      max-width: calc(100vw - 40px);
+      background: var(--cream);
+      border: 1px solid var(--warm);
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 8px 40px rgba(15,14,13,0.14);
+      /* 開閉アニメーション */
+      opacity: 0;
+      transform: translateY(16px) scale(0.98);
+      pointer-events: none;
+      transition: opacity 0.28s ease, transform 0.28s ease;
+      transform-origin: bottom right;
+    }
+    .chat-drawer.open {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    /* ---- ドロワーヘッダー ---- */
+    .chat-header {
+      padding: 16px 20px;
+      background: var(--dark);
+      color: var(--cream);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .chat-header-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .chat-header-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 400;
+      font-size: 16px;
+      letter-spacing: 0.14em;
+      color: var(--cream);
+    }
+    .chat-header-sub {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      color: rgba(245,243,239,0.55);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+    }
+    /* オンラインドット */
+    .chat-online-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #8fc49a;
+      flex-shrink: 0;
+      margin-right: 8px;
+    }
+    .chat-header-left {
+      display: flex;
+      align-items: center;
+    }
+    .chat-close-btn {
+      background: none;
+      border: none;
+      color: rgba(245,243,239,0.65);
+      cursor: pointer;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      transition: color 0.2s;
+    }
+    .chat-close-btn:hover { color: var(--cream); }
+    .chat-close-btn svg { width: 16px; height: 16px; }
+
+    /* ---- メッセージ表示エリア ---- */
+    .chat-messages {
+      flex: 1;
+      min-height: 280px;
+      max-height: 340px;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      scrollbar-width: none;
+    }
+    .chat-messages::-webkit-scrollbar { display: none; }
+
+    /* ウェルカムメッセージ */
+    .chat-welcome {
+      text-align: center;
+      padding: 16px 8px 8px;
+    }
+    .chat-welcome-mark {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .chat-welcome-text {
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.08em;
+      line-height: 1.8;
+      font-family: 'Inter', sans-serif;
+    }
+
+    /* メッセージバブル */
+    .chat-msg {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .chat-msg.user { align-items: flex-end; }
+    .chat-msg.assistant { align-items: flex-start; }
+
+    .chat-bubble {
+      padding: 10px 14px;
+      font-size: 12.5px;
+      line-height: 1.75;
+      letter-spacing: 0.03em;
+      max-width: 88%;
+      font-family: 'Noto Sans JP', sans-serif;
+      font-weight: 300;
+    }
+    .chat-msg.user .chat-bubble {
+      background: var(--dark);
+      color: var(--cream);
+    }
+    .chat-msg.assistant .chat-bubble {
+      background: var(--white);
+      color: var(--dark);
+      border: 1px solid var(--light);
+    }
+
+    /* タイピングインジケーター */
+    .chat-typing {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 10px 14px;
+      background: var(--white);
+      border: 1px solid var(--light);
+      width: fit-content;
+    }
+    .chat-typing span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--gray);
+      animation: typing-dot 1.2s infinite;
+    }
+    .chat-typing span:nth-child(2) { animation-delay: 0.2s; }
+    .chat-typing span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing-dot {
+      0%, 60%, 100% { opacity: 0.25; transform: translateY(0); }
+      30%            { opacity: 1;    transform: translateY(-3px); }
+    }
+
+    /* ---- 入力エリア ---- */
+    .chat-input-area {
+      padding: 12px 16px 14px;
+      border-top: 1px solid var(--light);
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      flex-shrink: 0;
+      background: var(--cream);
+    }
+    .chat-input {
+      flex: 1;
+      resize: none;
+      border: 1px solid var(--warm);
+      background: var(--white);
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 12.5px;
+      font-weight: 300;
+      color: var(--dark);
+      padding: 9px 12px;
+      outline: none;
+      line-height: 1.6;
+      max-height: 88px;
+      overflow-y: auto;
+      scrollbar-width: none;
+      transition: border-color 0.2s;
+    }
+    .chat-input::placeholder {
+      color: var(--warm);
+      font-size: 11.5px;
+      letter-spacing: 0.06em;
+    }
+    .chat-input:focus { border-color: var(--dark); }
+
+    .chat-send-btn {
+      flex-shrink: 0;
+      width: 38px;
+      height: 38px;
+      background: var(--dark);
+      color: var(--cream);
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .chat-send-btn:hover { background: var(--black); }
+    .chat-send-btn:disabled { background: var(--warm); cursor: not-allowed; }
+    .chat-send-btn svg { width: 15px; height: 15px; }
+
+    /* ---- モバイル対応 ---- */
+    @media (max-width: 480px) {
+      .chat-fab { bottom: 20px; right: 20px; }
+      .chat-drawer {
+        bottom: 82px;
+        right: 20px;
+        width: calc(100vw - 40px);
+      }
+    }
+  </style>
+
+  <!-- フローティングボタン -->
+  <button class="chat-fab" id="chatFab" aria-label="コンシェルジュチャットを開く">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+  </button>
+
+  <!-- チャットドロワー -->
+  <div class="chat-drawer" id="chatDrawer" role="dialog" aria-label="ÉPUREコンシェルジュ">
+    <div class="chat-header">
+      <div class="chat-header-left">
+        <div class="chat-online-dot"></div>
+        <div class="chat-header-brand">
+          <span class="chat-header-title">ÉPURE</span>
+          <span class="chat-header-sub">PERSONAL CONCIERGE</span>
+        </div>
+      </div>
+      <button class="chat-close-btn" id="chatCloseBtn" aria-label="チャットを閉じる">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="chat-messages" id="chatMessages">
+      <!-- ウェルカムメッセージ -->
+      <div class="chat-welcome">
+        <div class="chat-welcome-mark">É P U R E</div>
+        <p class="chat-welcome-text">
+          ご質問やご相談がございましたら、<br>お気軽にどうぞ。
+        </p>
+      </div>
+    </div>
+
+    <div class="chat-input-area">
+      <textarea
+        class="chat-input"
+        id="chatInput"
+        placeholder="メッセージを入力..."
+        rows="1"
+        aria-label="メッセージ入力"
+      ></textarea>
+      <button class="chat-send-btn" id="chatSendBtn" aria-label="送信" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    // ===== ÉPURE コンシェルジュ チャットボット =====
+    (function () {
+      'use strict';
+
+      // DOM 要素の取得
+      const fab        = document.getElementById('chatFab');
+      const drawer     = document.getElementById('chatDrawer');
+      const closeBtn   = document.getElementById('chatCloseBtn');
+      const messagesEl = document.getElementById('chatMessages');
+      const inputEl    = document.getElementById('chatInput');
+      const sendBtn    = document.getElementById('chatSendBtn');
+
+      // 会話履歴（APIに渡すmessages配列）
+      let messageHistory = [];
+      // 応答中フラグ
+      let isSending = false;
+
+      // ---- ドロワーの開閉 ----
+      function openDrawer() {
+        drawer.classList.add('open');
+        fab.setAttribute('aria-expanded', 'true');
+        inputEl.focus();
+      }
+      function closeDrawer() {
+        drawer.classList.remove('open');
+        fab.setAttribute('aria-expanded', 'false');
+      }
+
+      fab.addEventListener('click', () => {
+        drawer.classList.contains('open') ? closeDrawer() : openDrawer();
+      });
+      closeBtn.addEventListener('click', closeDrawer);
+
+      // ESCキーで閉じる
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && drawer.classList.contains('open')) closeDrawer();
+      });
+
+      // ---- 入力エリアの自動リサイズ ----
+      inputEl.addEventListener('input', () => {
+        inputEl.style.height = 'auto';
+        inputEl.style.height = Math.min(inputEl.scrollHeight, 88) + 'px';
+        sendBtn.disabled = inputEl.value.trim() === '' || isSending;
+      });
+
+      // Enterで送信（Shift+Enterで改行）
+      inputEl.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          if (!sendBtn.disabled) sendMessage();
+        }
+      });
+      sendBtn.addEventListener('click', sendMessage);
+
+      // ---- メッセージバブルの生成 ----
+      function appendMessage(role, text) {
+        const wrapper = document.createElement('div');
+        wrapper.className = `chat-msg ${role}`;
+
+        const bubble = document.createElement('div');
+        bubble.className = 'chat-bubble';
+        bubble.textContent = text;
+
+        wrapper.appendChild(bubble);
+        messagesEl.appendChild(wrapper);
+        scrollToBottom();
+        return bubble;
+      }
+
+      // ---- タイピングインジケーター ----
+      let typingEl = null;
+      function showTyping() {
+        typingEl = document.createElement('div');
+        typingEl.className = 'chat-msg assistant';
+        const indicator = document.createElement('div');
+        indicator.className = 'chat-typing';
+        indicator.innerHTML = '<span></span><span></span><span></span>';
+        typingEl.appendChild(indicator);
+        messagesEl.appendChild(typingEl);
+        scrollToBottom();
+      }
+      function removeTyping() {
+        if (typingEl) { typingEl.remove(); typingEl = null; }
+      }
+
+      // ---- スクロールを最下部へ ----
+      function scrollToBottom() {
+        messagesEl.scrollTop = messagesEl.scrollHeight;
+      }
+
+      // ---- メッセージ送信 ----
+      async function sendMessage() {
+        const text = inputEl.value.trim();
+        if (!text || isSending) return;
+
+        // UI をリセット
+        inputEl.value = '';
+        inputEl.style.height = 'auto';
+        sendBtn.disabled = true;
+        isSending = true;
+
+        // ユーザーメッセージを表示・履歴に追加
+        appendMessage('user', text);
+        messageHistory.push({ role: 'user', content: text });
+
+        // タイピング表示
+        showTyping();
+
+        try {
+          // /api/chat に SSE リクエスト
+          const resp = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ messages: messageHistory }),
+          });
+
+          if (!resp.ok) {
+            throw new Error(`HTTP ${resp.status}`);
+          }
+
+          removeTyping();
+
+          // ストリーミング受信
+          const reader  = resp.body.getReader();
+          const decoder = new TextDecoder();
+          let assistantText = '';
+          let bubble = null;
+
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            const chunk = decoder.decode(value, { stream: true });
+            const lines = chunk.split('\n');
+
+            for (const line of lines) {
+              if (!line.startsWith('data: ')) continue;
+              const payload = line.slice(6).trim();
+              if (payload === '[DONE]') break;
+
+              try {
+                const data = JSON.parse(payload);
+
+                // エラーメッセージ
+                if (data.error) {
+                  if (!bubble) bubble = appendMessage('assistant', '');
+                  bubble.textContent = data.error;
+                  break;
+                }
+
+                // テキストデルタ（ストリーミング）
+                if (data.text) {
+                  assistantText += data.text;
+                  if (!bubble) {
+                    // 最初のデルタでバブルを生成
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'chat-msg assistant';
+                    bubble = document.createElement('div');
+                    bubble.className = 'chat-bubble';
+                    bubble.textContent = assistantText;
+                    wrapper.appendChild(bubble);
+                    messagesEl.appendChild(wrapper);
+                  } else {
+                    bubble.textContent = assistantText;
+                  }
+                  scrollToBottom();
+                }
+              } catch {
+                // JSON パースエラーは無視
+              }
+            }
+          }
+
+          // 履歴に追加
+          if (assistantText) {
+            messageHistory.push({ role: 'assistant', content: assistantText });
+          }
+
+        } catch (err) {
+          removeTyping();
+          appendMessage('assistant', '申し訳ございません。接続に問題が発生しております。しばらくしてから再度お試しください。');
+          console.error('チャット送信エラー:', err);
+        } finally {
+          isSending = false;
+          sendBtn.disabled = inputEl.value.trim() === '';
+        }
+      }
+    })();
+  </script>
 </body>
 </html>
