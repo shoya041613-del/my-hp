@@ -364,16 +364,76 @@
       padding: 56px 28px 64px;
       border-top: 1px solid var(--light);
     }
-    .prod-grid {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
-      gap: 2px;
+    /* ===== 新着アイテム スライダー ===== */
+    .prod-slider {
+      position: relative;    /* 矢印の基準 */
+      overflow: hidden;
     }
+    .prod-track {
+      display: flex;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      gap: 2px;
+      background: var(--cream);
+    }
+    .prod-track::-webkit-scrollbar { display: none; }
+
+    /* デスクトップ：5枚表示 */
     .prod-card {
+      flex: 0 0 calc(20% - 2px);   /* 5枚 */
+      scroll-snap-align: start;
       cursor: pointer;
-      display: block;         /* <a>タグ対応 */
+      display: block;
       text-decoration: none;
       color: inherit;
+      background: var(--white);
+    }
+
+    /* スライダー矢印（col-arrowと同デザイン）*/
+    .prod-arrow {
+      position: absolute;
+      top: 40%;                     /* 画像中央付近 */
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.95);
+      border: 1px solid var(--light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s, opacity 0.2s;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .prod-arrow:hover { background: var(--white); }
+    .prod-arrow.prev { left: 10px; }
+    .prod-arrow.next { right: 10px; }
+    .prod-arrow svg  { width: 12px; height: 12px; }
+    .prod-arrow[disabled] { opacity: 0.25; pointer-events: none; }
+
+    /* ドットインジケーター */
+    .prod-dots {
+      display: flex;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 20px;
+    }
+    .prod-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--warm);
+      cursor: pointer;
+      transition: background 0.25s, transform 0.25s;
+      border: none;
+      padding: 0;
+    }
+    .prod-dot.on {
+      background: var(--dark);
+      transform: scale(1.3);
     }
     .prod-img-wrap {
       position: relative;
@@ -1040,10 +1100,12 @@
 
     /* ===== レスポンシブ ===== */
     @media (max-width: 1200px) {
-      .prod-grid { grid-template-columns: repeat(4, 1fr); }
+      /* スライダー：4枚表示 */
+      .prod-card { flex: 0 0 calc(25% - 2px); }
     }
     @media (max-width: 1024px) {
-      .prod-grid { grid-template-columns: repeat(3, 1fr); }
+      /* スライダー：3枚表示 */
+      .prod-card { flex: 0 0 calc(33.333% - 2px); }
       .col-card { flex: 0 0 50%; }
       .story-text, .boutique-text { padding: 56px 44px; }
       .story-heading { font-size: 28px; }
@@ -1053,7 +1115,8 @@
       .header-util-left .header-util-sep,
       .header-util-left a:last-child { display: none; }
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
-      .prod-grid { grid-template-columns: repeat(2, 1fr); }
+      /* スライダー：2枚表示 */
+      .prod-card { flex: 0 0 calc(50% - 2px); }
       .mag-grid { grid-template-columns: 1fr; }
       .ls-grid { grid-template-columns: repeat(2, 1fr); }
       .story-sec { grid-template-columns: 1fr; }
@@ -1075,6 +1138,8 @@
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
       .ls-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-cols { grid-template-columns: 1fr; }
+      /* スライダー：1.5枚表示（次の存在を示唆）*/
+      .prod-card { flex: 0 0 72%; }
       .products-sec, .magazine-sec { padding: 40px 16px 48px; }
     }
   </style>
@@ -1271,7 +1336,21 @@
       <h2 class="section-ttl">新着アイテム</h2>
       <a href="#categories" class="section-more">すべて見る</a>
     </div>
-    <div class="prod-grid">
+    <div class="prod-slider" id="prodSlider">
+      <!-- 前へ矢印 -->
+      <button class="prod-arrow prev" id="prodPrev" aria-label="前へ" disabled>
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M9 2L4 7l5 5"/>
+        </svg>
+      </button>
+      <!-- 次へ矢印 -->
+      <button class="prod-arrow next" id="prodNext" aria-label="次へ">
+        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M5 2l5 5-5 5"/>
+        </svg>
+      </button>
+
+      <div class="prod-track" id="prodTrack">
 
       <!-- P1: ラウンジチェア -->
       <a href="javascript:void(0)" class="prod-card"
@@ -1615,7 +1694,8 @@
         </div>
       </a>
 
-    </div>
+      </div><!-- /.prod-track -->
+    </div><!-- /.prod-slider -->
   </section>
 
   <!-- ===== マガジン ===== -->
@@ -1942,6 +2022,64 @@
       if (e.key === 'ArrowRight') colTrack.scrollBy({ left:  getCardW(), behavior: 'smooth' });
       if (e.key === 'ArrowLeft')  colTrack.scrollBy({ left: -getCardW(), behavior: 'smooth' });
     });
+
+    /* ===== 新着アイテム スライダー ===== */
+    const prodTrack = document.getElementById('prodTrack');
+    const prodPrev  = document.getElementById('prodPrev');
+    const prodNext  = document.getElementById('prodNext');
+
+    // カード1枚分の幅を取得
+    function getProdCardW() {
+      const c = prodTrack.querySelector('.prod-card');
+      if (!c) return 200;
+      return c.getBoundingClientRect().width + 2; /* gap分を加算 */
+    }
+
+    // 矢印の有効/無効を更新
+    function updateProdArrows() {
+      const atStart = prodTrack.scrollLeft <= 4;
+      const atEnd   = prodTrack.scrollLeft + prodTrack.clientWidth >= prodTrack.scrollWidth - 4;
+      prodPrev.disabled = atStart;
+      prodNext.disabled = atEnd;
+    }
+
+    // ドットインジケーター生成
+    const PROD_TOTAL = prodTrack.querySelectorAll('.prod-card').length;
+    const prodDotWrap = document.createElement('div');
+    prodDotWrap.className = 'prod-dots';
+    for (let i = 0; i < PROD_TOTAL; i++) {
+      const d = document.createElement('button');
+      d.className = 'prod-dot' + (i === 0 ? ' on' : '');
+      d.setAttribute('aria-label', `${i + 1}枚目`);
+      d.addEventListener('click', () => {
+        prodTrack.scrollTo({ left: getProdCardW() * i, behavior: 'smooth' });
+      });
+      prodDotWrap.appendChild(d);
+    }
+    document.getElementById('prodSlider').after(prodDotWrap);
+
+    // スクロール時にドットを更新
+    prodTrack.addEventListener('scroll', () => {
+      updateProdArrows();
+      const idx = Math.round(prodTrack.scrollLeft / Math.max(getProdCardW(), 1));
+      document.querySelectorAll('.prod-dot').forEach((d, i) => {
+        d.classList.toggle('on', i === idx);
+      });
+    }, { passive: true });
+
+    // 矢印クリック
+    prodNext.addEventListener('click', () => prodTrack.scrollBy({ left:  getProdCardW(), behavior: 'smooth' }));
+    prodPrev.addEventListener('click', () => prodTrack.scrollBy({ left: -getProdCardW(), behavior: 'smooth' }));
+
+    // タッチスワイプ
+    let prodTouchX = 0;
+    prodTrack.addEventListener('touchstart', e => { prodTouchX = e.touches[0].clientX; }, { passive: true });
+    prodTrack.addEventListener('touchend', e => {
+      const dx = e.changedTouches[0].clientX - prodTouchX;
+      if (Math.abs(dx) > 40) prodTrack.scrollBy({ left: dx < 0 ? getProdCardW() : -getProdCardW(), behavior: 'smooth' });
+    }, { passive: true });
+
+    updateProdArrows();
 
     /* ===== ページトップボタン ===== */
     const backTop = document.getElementById('backTop');
