@@ -1274,7 +1274,11 @@
     <div class="prod-grid">
 
       <!-- P1: ラウンジチェア -->
-      <a href="#products" class="prod-card">
+      <a href="javascript:void(0)" class="prod-card"
+         data-id="p1"
+         data-name="ウォールナット材 ラウンジチェア"
+         data-price="148000"
+         data-img="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=200&q=70&fit=crop&crop=center">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&q=80&fit=crop&crop=center');"></div>
           <span class="prod-badge">NEW</span>
@@ -1294,7 +1298,11 @@
       </a>
 
       <!-- P2: リネン クッションカバー -->
-      <a href="#products" class="prod-card">
+      <a href="javascript:void(0)" class="prod-card"
+         data-id="p2"
+         data-name="リネン クッションカバー"
+         data-price="14800"
+         data-img="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=200&q=70&fit=crop&crop=center">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80&fit=crop&crop=center');"></div>
           <div class="prod-hover-layer">
@@ -1313,7 +1321,11 @@
       </a>
 
       <!-- P3: 磁器製 フラワーベース -->
-      <a href="#products" class="prod-card">
+      <a href="javascript:void(0)" class="prod-card"
+         data-id="p3"
+         data-name="磁器製 フラワーベース"
+         data-price="28000"
+         data-img="https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=200&q=70&fit=crop&crop=center">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=600&q=80&fit=crop&crop=center');"></div>
           <div class="prod-hover-layer">
@@ -1331,7 +1343,11 @@
       </a>
 
       <!-- P4: ウール ブランケット -->
-      <a href="#products" class="prod-card">
+      <a href="javascript:void(0)" class="prod-card"
+         data-id="p4"
+         data-name="ウール ブランケット"
+         data-price="42000"
+         data-img="https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=200&q=70&fit=crop&crop=center">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=600&q=80&fit=crop&crop=center');"></div>
           <span class="prod-badge">BESTSELLER</span>
@@ -1351,7 +1367,11 @@
       </a>
 
       <!-- P5: 真鍮製 フロアランプ -->
-      <a href="#products" class="prod-card">
+      <a href="javascript:void(0)" class="prod-card"
+         data-id="p5"
+         data-name="真鍮製 フロアランプ"
+         data-price="88000"
+         data-img="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=200&q=70&fit=crop&crop=center">
         <div class="prod-img-wrap">
           <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=600&q=80&fit=crop&crop=center');"></div>
           <div class="prod-hover-layer">
@@ -1716,6 +1736,454 @@
     }, { threshold: 0.06 });
 
     document.querySelectorAll('.fade-in').forEach(el => io.observe(el));
+  </script>
+
+  <!-- ===== カートドロワー ===== -->
+  <div class="cart-overlay" id="cartOverlay"></div>
+  <aside class="cart-drawer" id="cartDrawer" aria-label="カート" role="dialog">
+    <div class="cart-drawer-hd">
+      <p class="cart-drawer-title">ショッピングカート</p>
+      <button class="cart-drawer-close" id="cartClose" aria-label="閉じる">
+        <svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.3">
+          <path d="M2 2l12 12M14 2L2 14"/>
+        </svg>
+      </button>
+    </div>
+    <div class="cart-items" id="cartItems">
+      <!-- JS でレンダリング -->
+    </div>
+    <div class="cart-drawer-ft" id="cartFt">
+      <!-- 合計 + チェックアウト（JS でレンダリング）-->
+    </div>
+  </aside>
+
+  <!-- ===== トースト通知 ===== -->
+  <div class="cart-toast" id="cartToast">
+    <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8">
+      <path d="M2.5 8.5l3.5 3.5 7.5-8"/>
+    </svg>
+    <span id="cartToastMsg">カートに追加しました</span>
+  </div>
+
+  <style>
+    /* ===== カートドロワー ===== */
+    .cart-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(15,14,13,0.45);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.35s;
+      z-index: 900;
+    }
+    .cart-overlay.open { opacity: 1; pointer-events: auto; }
+
+    .cart-drawer {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: min(420px, 100vw);
+      height: 100dvh;
+      background: var(--white);
+      z-index: 901;
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.42s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      box-shadow: -6px 0 40px rgba(15,14,13,0.10);
+    }
+    .cart-drawer.open { transform: translateX(0); }
+
+    /* ドロワーヘッダー */
+    .cart-drawer-hd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 28px 20px;
+      border-bottom: 1px solid var(--light);
+      flex-shrink: 0;
+    }
+    .cart-drawer-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-weight: 400;
+      letter-spacing: 0.08em;
+      color: var(--black);
+    }
+    .cart-drawer-close {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--gray);
+      padding: 4px;
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+    }
+    .cart-drawer-close:hover { color: var(--black); }
+
+    /* カートアイテムリスト */
+    .cart-items {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 28px;
+      scroll-behavior: smooth;
+    }
+    .cart-items::-webkit-scrollbar { width: 4px; }
+    .cart-items::-webkit-scrollbar-thumb { background: var(--warm); border-radius: 2px; }
+
+    /* 空カート */
+    .cart-empty {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      gap: 16px;
+      color: var(--gray);
+      text-align: center;
+    }
+    .cart-empty svg { opacity: 0.25; }
+    .cart-empty p { font-size: 13px; letter-spacing: 0.1em; line-height: 1.8; }
+
+    /* カートアイテム行 */
+    .cart-item {
+      display: grid;
+      grid-template-columns: 80px 1fr auto;
+      gap: 14px;
+      align-items: start;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--light);
+    }
+    .cart-item:last-child { border-bottom: none; }
+    .cart-item-img {
+      width: 80px;
+      height: 80px;
+      background-size: cover;
+      background-position: center;
+      background-color: var(--light);
+    }
+    .cart-item-info { min-width: 0; }
+    .cart-item-name {
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--dark);
+      line-height: 1.5;
+      margin-bottom: 6px;
+    }
+    .cart-item-price {
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      color: var(--gray);
+      margin-bottom: 12px;
+    }
+    /* 数量コントロール */
+    .cart-qty {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+      border: 1px solid var(--warm);
+      height: 28px;
+    }
+    .cart-qty-btn {
+      background: none;
+      border: none;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      font-size: 15px;
+      color: var(--dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      flex-shrink: 0;
+    }
+    .cart-qty-btn:hover { background: var(--light); }
+    .cart-qty-val {
+      width: 32px;
+      text-align: center;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--dark);
+      border-left: 1px solid var(--warm);
+      border-right: 1px solid var(--warm);
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    /* 削除ボタン */
+    .cart-item-del {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--warm);
+      padding: 2px;
+      transition: color 0.2s;
+      margin-top: 2px;
+    }
+    .cart-item-del:hover { color: var(--black); }
+
+    /* フッター（合計 + チェックアウト）*/
+    .cart-drawer-ft {
+      flex-shrink: 0;
+      padding: 20px 28px 28px;
+      border-top: 1px solid var(--light);
+    }
+    .cart-subtotal {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 18px;
+    }
+    .cart-subtotal-lbl {
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    .cart-subtotal-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--black);
+      letter-spacing: 0.04em;
+    }
+    .cart-checkout-btn {
+      display: block;
+      width: 100%;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 16px;
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.25s;
+      font-family: 'Inter', sans-serif;
+    }
+    .cart-checkout-btn:hover { background: var(--dark); }
+    .cart-tax-note {
+      text-align: center;
+      font-size: 9px;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+      margin-top: 10px;
+    }
+
+    /* ===== トースト通知 ===== */
+    .cart-toast {
+      position: fixed;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      background: var(--dark);
+      color: var(--white);
+      padding: 12px 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s, transform 0.3s;
+      z-index: 999;
+      white-space: nowrap;
+      box-shadow: 0 4px 24px rgba(15,14,13,0.25);
+    }
+    .cart-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* モバイル対応 */
+    @media (max-width: 480px) {
+      .cart-drawer { width: 100vw; }
+      .cart-drawer-hd { padding: 20px 20px 16px; }
+      .cart-items { padding: 16px 20px; }
+      .cart-drawer-ft { padding: 16px 20px 24px; }
+      .cart-toast { bottom: 80px; font-size: 10px; }
+    }
+  </style>
+
+  <script>
+    /* ===== カート機能 ===== */
+
+    // カート状態をlocalStorageで管理
+    let cart = JSON.parse(localStorage.getItem('epure_cart') || '[]');
+
+    // バッジ更新
+    function updateCartBadge() {
+      const total = cart.reduce((sum, item) => sum + item.qty, 0);
+      document.querySelector('.cart-badge').textContent = total;
+    }
+
+    // 金額フォーマット（カンマ区切り）
+    function fmtPrice(yen) {
+      return '¥' + Number(yen).toLocaleString('ja-JP');
+    }
+
+    // カートをlocalStorageに保存
+    function saveCart() {
+      localStorage.setItem('epure_cart', JSON.stringify(cart));
+    }
+
+    // カートドロワーをレンダリング
+    function renderCart() {
+      const itemsEl = document.getElementById('cartItems');
+      const ftEl    = document.getElementById('cartFt');
+
+      if (cart.length === 0) {
+        // 空カート表示
+        itemsEl.innerHTML = `
+          <div class="cart-empty">
+            <svg viewBox="0 0 40 40" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.2">
+              <circle cx="20" cy="20" r="18"/>
+              <path d="M12 16h16l-2 10H14L12 16z"/>
+              <path d="M16 16v-3a4 4 0 0 1 8 0v3"/>
+            </svg>
+            <p>カートに商品がありません</p>
+          </div>`;
+        ftEl.innerHTML = '';
+        return;
+      }
+
+      // アイテム一覧
+      itemsEl.innerHTML = cart.map(item => `
+        <div class="cart-item" data-id="${item.id}">
+          <div class="cart-item-img" style="background-image:url('${item.img}')"></div>
+          <div class="cart-item-info">
+            <p class="cart-item-name">${item.name}</p>
+            <p class="cart-item-price">${fmtPrice(item.price)}</p>
+            <div class="cart-qty">
+              <button class="cart-qty-btn" data-action="minus" data-id="${item.id}">−</button>
+              <span class="cart-qty-val">${item.qty}</span>
+              <button class="cart-qty-btn" data-action="plus" data-id="${item.id}">+</button>
+            </div>
+          </div>
+          <button class="cart-item-del" data-id="${item.id}" aria-label="削除">
+            <svg viewBox="0 0 14 14" width="13" height="13" fill="none" stroke="currentColor" stroke-width="1.4">
+              <path d="M1.5 1.5l11 11M12.5 1.5l-11 11"/>
+            </svg>
+          </button>
+        </div>
+      `).join('');
+
+      // 合計金額
+      const subtotal = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+      ftEl.innerHTML = `
+        <div class="cart-subtotal">
+          <span class="cart-subtotal-lbl">小計</span>
+          <span class="cart-subtotal-val">${fmtPrice(subtotal)}</span>
+        </div>
+        <button class="cart-checkout-btn">購入手続きへ</button>
+        <p class="cart-tax-note">送料・税込み / 配送は3〜5営業日以内</p>
+      `;
+
+      // 数量変更 / 削除ボタンにイベント付与
+      document.querySelectorAll('.cart-qty-btn').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const id     = btn.dataset.id;
+          const action = btn.dataset.action;
+          const idx    = cart.findIndex(i => i.id === id);
+          if (idx < 0) return;
+          if (action === 'plus') {
+            cart[idx].qty++;
+          } else {
+            cart[idx].qty--;
+            if (cart[idx].qty <= 0) cart.splice(idx, 1);
+          }
+          saveCart();
+          updateCartBadge();
+          renderCart();
+        });
+      });
+      document.querySelectorAll('.cart-item-del').forEach(btn => {
+        btn.addEventListener('click', e => {
+          e.stopPropagation();
+          const id  = btn.dataset.id;
+          cart = cart.filter(i => i.id !== id);
+          saveCart();
+          updateCartBadge();
+          renderCart();
+        });
+      });
+    }
+
+    // ドロワー開閉
+    function openCart() {
+      renderCart();
+      document.getElementById('cartDrawer').classList.add('open');
+      document.getElementById('cartOverlay').classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeCart() {
+      document.getElementById('cartDrawer').classList.remove('open');
+      document.getElementById('cartOverlay').classList.remove('open');
+      document.body.style.overflow = '';
+    }
+
+    document.getElementById('cartClose').addEventListener('click', closeCart);
+    document.getElementById('cartOverlay').addEventListener('click', closeCart);
+
+    // ヘッダーのカートリンクをクリックでドロワーを開く
+    document.querySelector('.cart-link').addEventListener('click', e => {
+      e.preventDefault();
+      openCart();
+    });
+
+    // トースト表示
+    let toastTimer = null;
+    function showToast(name) {
+      const toast = document.getElementById('cartToast');
+      document.getElementById('cartToastMsg').textContent = `「${name}」をカートに追加しました`;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove('show'), 2800);
+    }
+
+    // カートに追加ボタンのイベント
+    document.querySelectorAll('.prod-add-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.stopPropagation();  // prod-cardのリンクを発火させない
+        e.preventDefault();
+
+        const card  = btn.closest('.prod-card');
+        const id    = card.dataset.id;
+        const name  = card.dataset.name;
+        const price = parseInt(card.dataset.price, 10);
+        const img   = card.dataset.img;
+
+        // 既存アイテムなら数量+1、なければ追加
+        const existing = cart.find(i => i.id === id);
+        if (existing) {
+          existing.qty++;
+        } else {
+          cart.push({ id, name, price, img, qty: 1 });
+        }
+        saveCart();
+        updateCartBadge();
+
+        // ボタンのビジュアルフィードバック
+        btn.textContent = '✓ 追加済み';
+        btn.style.background = 'rgba(42,40,38,0.9)';
+        btn.style.color      = 'var(--white)';
+        setTimeout(() => {
+          btn.textContent     = 'カートに追加';
+          btn.style.background = '';
+          btn.style.color      = '';
+        }, 1600);
+
+        showToast(name);
+      });
+    });
+
+    // 初期バッジ反映
+    updateCartBadge();
   </script>
 </body>
 </html>
