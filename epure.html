@@ -6,7 +6,7 @@
   <title>ÉPURE — 日常の純粋な美学</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans+JP:wght@300;400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=Inter:wght@200;300;400;500&display=swap" rel="stylesheet">
   <style>
     /* ===== リセット & 基本 ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -103,7 +103,7 @@
     .lang-btn.lang-active { color: var(--dark); font-weight: 500; }
     .header-util-sep { color: var(--light); font-size: 12px; }
     .header-logo-center {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 21px;
       font-weight: 400;
       letter-spacing: 0.6em;
@@ -239,7 +239,7 @@
       margin-bottom: 6px;
     }
     .col-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 18px;
       font-weight: 400;
       letter-spacing: 0.04em;
@@ -320,7 +320,7 @@
       color: var(--white);
     }
     .cat-tile-name {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 25px;
       font-weight: 400;
       letter-spacing: 0.07em;
@@ -343,7 +343,7 @@
       margin-bottom: 28px;
     }
     .section-ttl {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 22px;
       font-weight: 400;
       letter-spacing: 0.08em;
@@ -359,60 +359,117 @@
     }
     .section-more:hover { color: var(--black); border-color: var(--black); }
 
-    /* ===== プロダクトグリッド 5列 ===== */
+    /* ===== プロダクトグリッド 5列（HAY Japan スタイル）===== */
     .products-sec {
-      padding: 56px 28px 64px;
-      border-top: 1px solid var(--light);
+      padding: 72px 0 80px;
+      background: #F0F1F6;
     }
-    /* ===== 新着アイテム スライダー ===== */
-    .prod-slider {
-      position: relative;    /* 矢印の基準 */
-      overflow: hidden;
-    }
-    .prod-track {
-      display: flex;
-      overflow-x: auto;
-      scroll-snap-type: x mandatory;
-      scrollbar-width: none;
-      gap: 2px;
-      background: var(--cream);
-    }
-    .prod-track::-webkit-scrollbar { display: none; }
+    /* 旧タイトル非表示 */
+    .products-sec .section-hd { display: none; }
 
-    /* デスクトップ：5枚表示 */
+    /* HAY Japan スタイル：中央揃えタイトル */
+    .new-items-title-wrap {
+      text-align: center;
+      padding: 0 28px;
+      margin-bottom: 48px;
+    }
+    .new-items-main-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      color: var(--black);
+    }
+    .new-items-sub-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      color: var(--gray);
+    }
+
+    /* グリッドレイアウト */
+    .prod-slider { position: relative; }
+    .prod-track {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 16px;
+      background: transparent;
+      padding: 0 16px;
+    }
     .prod-card {
-      flex: 0 0 calc(20% - 2px);   /* 5枚 */
-      scroll-snap-align: start;
       cursor: pointer;
       display: block;
       text-decoration: none;
       color: inherit;
       background: var(--white);
     }
+    /* 矢印・ドット非表示 */
+    .prod-arrow, .prod-dots { display: none; }
 
-    /* スライダー矢印（col-arrowと同デザイン）*/
-    .prod-arrow {
+    /* ===== ランキングセクション（HAY Japan スタイル）===== */
+    .ranking-sec {
+      padding: 72px 0 80px;
+      border-top: 1px solid var(--light);
+      background: var(--white);
+    }
+    /* 中央揃えタイトル */
+    .ranking-title-wrap {
+      text-align: center;
+      padding: 0 28px;
+      margin-bottom: 48px;
+    }
+    .ranking-main-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+    .ranking-cat-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+    /* グリッド */
+    .rank-track {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 0 1px;
+      background: var(--light);
+    }
+    .rank-card {
+      position: relative;
+      background: var(--white);
+      cursor: pointer;
+    }
+    /* HAY Japan スタイル：画像左上角に重なるアウトラインバッジ */
+    .rank-badge {
       position: absolute;
-      top: 40%;                     /* 画像中央付近 */
-      transform: translateY(-50%);
-      z-index: 10;
-      width: 40px;
-      height: 40px;
-      background: rgba(255,255,255,0.95);
-      border: 1px solid var(--light);
+      top: 8px;
+      left: 8px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1px solid #aaaaaa;
+      background: rgba(255,255,255,0.92);
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      transition: background 0.2s, opacity 0.2s;
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--black);
+      z-index: 2;
     }
-    .prod-arrow:hover { background: var(--white); }
-    .prod-arrow.prev { left: 10px; }
-    .prod-arrow.next { right: 10px; }
-    .prod-arrow svg  { width: 12px; height: 12px; }
-    .prod-arrow[disabled] { opacity: 0.25; pointer-events: none; }
+    /* タブは非表示 */
+    .rank-tabs { display: none; }
 
     /* ドットインジケーター */
     .prod-dots {
@@ -422,31 +479,56 @@
       margin-top: 20px;
     }
     .prod-dot {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: none;
+      cursor: pointer;
+      border: none;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      transition: opacity 0.2s;
+    }
+    /* 非アクティブ：小さい丸 */
+    .prod-dot::before {
+      content: '';
       width: 5px;
       height: 5px;
       border-radius: 50%;
       background: var(--warm);
-      cursor: pointer;
       transition: background 0.25s, transform 0.25s;
-      border: none;
-      padding: 0;
     }
-    .prod-dot.on {
-      background: var(--dark);
-      transform: scale(1.3);
+    .prod-dot:hover::before { background: var(--gray); }
+    /* アクティブ：× に切り替え */
+    .prod-dot.on::before { display: none; }
+    .prod-dot.on::after {
+      content: '×';
+      font-size: 13px;
+      line-height: 1;
+      color: var(--dark);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
     }
     .prod-img-wrap {
       position: relative;
       overflow: hidden;
-      aspect-ratio: 3 / 4;
-      background: var(--cream);
+      aspect-ratio: 3 / 2;
+      background: var(--white);
     }
     .prod-img {
       width: 100%;
       height: 100%;
-      background-size: cover;
+      background-size: contain;
       background-position: center;
+      background-repeat: no-repeat;
       transition: transform 0.55s ease;
+    }
+    /* ランキングカードは正方形比率 */
+    .rank-card .prod-img-wrap {
+      aspect-ratio: 1 / 1;
     }
     .prod-card:hover .prod-img { transform: scale(1.05); }
 
@@ -586,7 +668,7 @@
       margin-bottom: 9px;
     }
     .art-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 17px;
       font-weight: 400;
       line-height: 1.65;
@@ -633,7 +715,7 @@
     }
     .ls-tile:hover .ls-overlay { background: rgba(15,14,13,0.38); }
     .ls-name {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 21px;
       font-weight: 400;
       letter-spacing: 0.2em;
@@ -668,7 +750,7 @@
       margin-bottom: 22px;
     }
     .story-heading {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 34px;
       font-weight: 400;
       line-height: 1.5;
@@ -721,7 +803,7 @@
       margin-bottom: 18px;
     }
     .nl-heading {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 30px;
       font-weight: 400;
       letter-spacing: 0.06em;
@@ -778,6 +860,166 @@
       letter-spacing: 0.06em;
     }
 
+    /* ===== お問い合わせ ===== */
+    .contact-sec {
+      padding: 100px 40px 120px;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .contact-label {
+      font-size: 10px;
+      letter-spacing: 0.26em;
+      color: var(--gray);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      margin-bottom: 16px;
+    }
+    .contact-heading {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(28px, 4vw, 42px);
+      font-weight: 300;
+      color: var(--dark);
+      letter-spacing: 0.06em;
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .contact-sub {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 1.9;
+      letter-spacing: 0.04em;
+      margin-bottom: 52px;
+    }
+    /* フォームグリッド */
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .contact-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      margin-bottom: 1px;
+    }
+    .contact-field {
+      display: flex;
+      flex-direction: column;
+    }
+    .contact-field.full {
+      grid-column: 1 / -1;
+    }
+    .contact-label-field {
+      font-size: 9.5px;
+      letter-spacing: 0.18em;
+      color: var(--gray);
+      font-family: 'Inter', sans-serif;
+      font-weight: 400;
+      padding: 14px 16px 4px;
+      background: var(--cream);
+      border: 1px solid var(--light);
+      border-bottom: none;
+    }
+    .contact-input,
+    .contact-select,
+    .contact-textarea {
+      font-family: 'Noto Sans JP', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--dark);
+      background: var(--cream);
+      border: 1px solid var(--light);
+      border-top: none;
+      padding: 10px 16px 16px;
+      outline: none;
+      width: 100%;
+      transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+    .contact-input:focus,
+    .contact-select:focus,
+    .contact-textarea:focus {
+      border-color: var(--dark);
+      background: var(--white);
+    }
+    .contact-textarea {
+      resize: none;
+      height: 160px;
+      line-height: 1.8;
+    }
+    /* セレクトの矢印 */
+    .contact-select-wrap {
+      position: relative;
+    }
+    .contact-select-wrap::after {
+      content: '';
+      position: absolute;
+      right: 16px;
+      bottom: 18px;
+      width: 8px;
+      height: 8px;
+      border-right: 1px solid var(--gray);
+      border-bottom: 1px solid var(--gray);
+      transform: rotate(45deg);
+      pointer-events: none;
+    }
+    /* 送信ボタン */
+    .contact-submit {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .contact-note {
+      font-size: 10.5px;
+      color: var(--gray);
+      letter-spacing: 0.04em;
+      line-height: 1.7;
+    }
+    .contact-btn {
+      flex-shrink: 0;
+      padding: 14px 36px;
+      background: var(--dark);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      border: none;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+    .contact-btn:hover { background: var(--black); }
+    .contact-btn:disabled { background: var(--warm); cursor: not-allowed; }
+    /* 送信完了メッセージ */
+    .contact-thanks {
+      display: none;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    .contact-thanks.show { display: block; }
+    .contact-thanks-mark {
+      font-family: 'Inter', sans-serif;
+      font-size: 36px;
+      font-weight: 300;
+      letter-spacing: 0.2em;
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+    .contact-thanks-text {
+      font-size: 13px;
+      color: var(--gray);
+      line-height: 2;
+      letter-spacing: 0.06em;
+    }
+    /* レスポンシブ */
+    @media (max-width: 640px) {
+      .contact-sec { padding: 72px 24px 96px; }
+      .contact-row { grid-template-columns: 1fr; }
+      .contact-submit { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .contact-btn { width: 100%; text-align: center; }
+    }
+
     /* ===== フッター ===== */
     .site-footer {
       background: var(--black);
@@ -815,7 +1057,7 @@
       gap: 16px;
     }
     .footer-logo {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 17px;
       letter-spacing: 0.58em;
       text-transform: uppercase;
@@ -840,38 +1082,50 @@
     }
 
     /* ===== ヒーローセクション（Figma設計準拠：1440×820 / 左580テキスト + 右860画像）===== */
+    /* ===== ヒーロー：フルワイド写真オーバーレイレイアウト ===== */
     .hero-sec {
-      display: grid;
-      grid-template-columns: 580px 1fr;
+      position: relative;
       height: calc(100vh - 90px);
-      min-height: 640px;
-      max-height: 860px;
+      min-height: 600px;
+      max-height: 920px;
       overflow: hidden;
     }
-    /* 左：テキストパネル */
+    /* フル幅背景画像 */
+    .hero-img {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-color: #ede9e3;
+      animation: kenBurns 2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+      transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    }
+    .hero-sec:hover .hero-img { transform: scale(1.02); animation: none; }
+    @keyframes kenBurns {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1.00); }
+    }
+    /* 下部グラデーションオーバーレイ */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        rgba(15, 14, 13, 0.65) 0%,
+        rgba(15, 14, 13, 0.28) 45%,
+        rgba(15, 14, 13, 0.02) 75%
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+    /* 左下テキストオーバーレイ */
     .hero-text {
-      background: var(--cream);
-      display: flex;
-      flex-direction: column;
-      padding: 80px 80px 60px;
-      position: relative;
-      border-right: 1px solid var(--warm);
-    }
-    /* ブランドラベル */
-    .hero-brand-lbl {
-      font-family: 'Inter', sans-serif;
-      font-size: 11px;
-      font-weight: 300;
-      letter-spacing: 4px;
-      color: var(--gray);
-    }
-    /* ラベル下の短い横線 */
-    .hero-brand-rule {
-      width: 40px;
-      height: 1px;
-      background: var(--warm);
-      margin: 14px 0 0;
-      flex-shrink: 0;
+      position: absolute;
+      bottom: 76px;
+      left: 80px;
+      z-index: 2;
+      max-width: 520px;
     }
     /* コレクションラベル */
     .hero-col-lbl {
@@ -879,116 +1133,79 @@
       font-size: 10px;
       font-weight: 300;
       letter-spacing: 2.5px;
-      color: var(--gray);
+      color: rgba(245, 243, 239, 0.75);
       text-transform: uppercase;
-      margin-top: auto;
-      padding-top: 60px;
+      display: block;
+      margin-bottom: 16px;
     }
     /* メインヘッドライン */
     .hero-headline {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 62px;
-      font-weight: 300;
-      line-height: 1.12;
-      letter-spacing: -0.5px;
-      color: var(--black);
-      margin-top: 18px;
+      font-family: 'Inter', sans-serif;
+      font-size: 58px;
+      font-weight: 200;
+      line-height: 1.15;
+      letter-spacing: -1.8px;
+      color: var(--cream);
+      margin-bottom: 22px;
     }
-    .hero-headline em { font-style: italic; }
+    .hero-headline em { font-style: normal; font-weight: 300; }
     /* サブテキスト */
     .hero-body {
       font-family: 'Inter', sans-serif;
       font-size: 13px;
       font-weight: 300;
-      line-height: 1.85;
-      letter-spacing: 0.3px;
-      color: var(--gray);
-      margin-top: 36px;
+      line-height: 1.9;
+      color: rgba(245, 243, 239, 0.7);
+      margin-bottom: 36px;
     }
     /* CTAリンク */
     .hero-cta {
       display: inline-block;
+      position: relative;
       font-family: 'Inter', sans-serif;
       font-size: 11px;
       font-weight: 400;
       letter-spacing: 1.8px;
-      color: var(--dark);
+      color: var(--cream);
       text-transform: uppercase;
-      margin-top: 44px;
       padding-bottom: 5px;
-      border-bottom: 0.75px solid var(--dark);
-      transition: opacity 0.25s;
-      align-self: flex-start;
-    }
-    .hero-cta:hover { opacity: 0.5; }
-    /* スライド番号インジケーター */
-    .hero-indicator {
-      font-family: 'Inter', sans-serif;
-      font-size: 10px;
-      font-weight: 300;
-      letter-spacing: 2px;
-      color: var(--gray);
-      margin-top: 28px;
-    }
-    /* 右：画像パネル */
-    .hero-img {
-      background-size: cover;
-      background-position: center;
-      position: relative;
-      overflow: hidden;
-      transition: transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    }
-    /* 左縁の微細グラデーションオーバーレイ */
-    .hero-img::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to right, rgba(15,14,13,0.10) 0%, transparent 28%);
-      z-index: 1;
-      pointer-events: none;
-    }
-    /* ページロード時のKen Burnsエフェクト */
-    @keyframes kenBurns {
-      from { transform: scale(1.04); }
-      to   { transform: scale(1.00); }
-    }
-    .hero-img { animation: kenBurns 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
-    /* ホバーで画像をわずかに拡大 */
-    .hero-sec:hover .hero-img { transform: scale(1.018); animation: none; }
-
-    /* ヒーローテキスト 入場アニメーション */
-    @keyframes fadeSlideUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    .hero-brand-lbl  { animation: fadeSlideUp 0.7s ease both; animation-delay: 0.15s; }
-    .hero-brand-rule { animation: fadeSlideUp 0.7s ease both; animation-delay: 0.25s; }
-    .hero-col-lbl    { animation: fadeSlideUp 0.7s ease both; animation-delay: 0.45s; }
-    .hero-headline   { animation: fadeSlideUp 0.9s ease both; animation-delay: 0.60s; }
-    .hero-body       { animation: fadeSlideUp 0.7s ease both; animation-delay: 0.80s; }
-    .hero-cta        { animation: fadeSlideUp 0.7s ease both; animation-delay: 0.95s; }
-    .hero-indicator  { animation: fadeSlideUp 0.7s ease both; animation-delay: 1.05s; }
-
-    /* ヒーローCTA アンダーラインアニメーション */
-    .hero-cta {
-      position: relative;
-      border-bottom: none !important; /* 旧ボーダーを無効化 */
     }
     .hero-cta::after {
       content: '';
       position: absolute;
       bottom: 0; left: 0;
       width: 100%; height: 0.75px;
-      background: var(--dark);
+      background: rgba(245, 243, 239, 0.7);
       transform-origin: left;
       transition: transform 0.35s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
     .hero-cta:hover::after { transform: scaleX(0.35); transform-origin: right; }
+    /* スライド番号インジケーター */
+    .hero-indicator {
+      display: block;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 300;
+      letter-spacing: 2px;
+      color: rgba(245, 243, 239, 0.45);
+      margin-top: 28px;
+    }
 
-    /* スクロールインジケーター（ヒーロー右下）*/
+    /* ヒーローテキスト 入場アニメーション */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-col-lbl  { animation: fadeSlideUp 0.7s ease both; animation-delay: 0.3s; }
+    .hero-headline { animation: fadeSlideUp 0.9s ease both; animation-delay: 0.5s; }
+    .hero-body     { animation: fadeSlideUp 0.7s ease both; animation-delay: 0.75s; }
+    .hero-cta      { animation: fadeSlideUp 0.7s ease both; animation-delay: 0.9s; }
+    .hero-indicator{ animation: fadeSlideUp 0.7s ease both; animation-delay: 1.0s; }
+
+    /* スクロールインジケーター（右下） */
     .hero-scroll {
       position: absolute;
-      bottom: 48px; right: 44px;
+      bottom: 52px; right: 48px;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1003,23 +1220,20 @@
       font-weight: 300;
       letter-spacing: 3px;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
+      color: rgba(245, 243, 239, 0.55);
       writing-mode: vertical-rl;
-      text-orientation: mixed;
     }
     .hero-scroll-line {
-      width: 1px;
-      height: 52px;
-      background: rgba(255,255,255,0.25);
-      position: relative;
-      overflow: hidden;
+      width: 1px; height: 52px;
+      background: rgba(245, 243, 239, 0.2);
+      position: relative; overflow: hidden;
     }
     .hero-scroll-line::after {
       content: '';
       position: absolute;
       top: -100%; left: 0;
       width: 100%; height: 100%;
-      background: rgba(255,255,255,0.8);
+      background: rgba(245, 243, 239, 0.7);
       animation: scrollDrop 1.8s ease-in-out infinite;
     }
     @keyframes scrollDrop {
@@ -1051,40 +1265,19 @@
     @media (max-width: 480px) { .back-top { bottom: 24px; right: 20px; } }
 
     /* ===== ヒーロー レスポンシブ ===== */
-    @media (max-width: 1100px) {
-      .hero-sec { grid-template-columns: 500px 1fr; }
-      .hero-headline { font-size: 52px; }
-      .hero-text { padding: 72px 64px 56px; }
-      .hero-indicator { left: 64px; }
-    }
     @media (max-width: 1024px) {
-      .hero-sec {
-        grid-template-columns: 1fr;
-        height: auto;
-        max-height: none;
-      }
-      .hero-img {
-        aspect-ratio: 4 / 3;
-        order: -1; /* 画像を上に */
-      }
-      .hero-text {
-        padding: 48px 44px 60px;
-        border-right: none;
-        border-top: 1px solid var(--warm);
-      }
-      .hero-headline { font-size: 46px; }
-      .hero-col-lbl { margin-top: 0; padding-top: 0; }
-      .hero-indicator { position: static; margin-top: 44px; }
+      .hero-headline { font-size: 48px; }
+      .hero-text { left: 56px; bottom: 60px; }
     }
     @media (max-width: 768px) {
-      .hero-headline { font-size: 38px; }
-      .hero-text { padding: 40px 32px 52px; }
+      .hero-headline { font-size: 38px; letter-spacing: -1px; }
+      .hero-text { left: 36px; bottom: 52px; max-width: calc(100% - 72px); }
+      .hero-body { display: none; }
     }
     @media (max-width: 480px) {
+      .hero-sec { height: 92svh; min-height: 520px; }
       .hero-headline { font-size: 32px; }
-      .hero-text { padding: 36px 24px 48px; }
-      .hero-brand-lbl { display: none; }
-      .hero-brand-rule { display: none; }
+      .hero-text { left: 24px; bottom: 44px; max-width: calc(100% - 48px); }
       .hero-indicator { display: none; }
     }
 
@@ -1104,8 +1297,8 @@
       .prod-card { flex: 0 0 calc(25% - 2px); }
     }
     @media (max-width: 1024px) {
-      /* スライダー：3枚表示 */
-      .prod-card { flex: 0 0 calc(33.333% - 2px); }
+      .prod-track { grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 12px; }
+      .rank-track { grid-template-columns: repeat(3, 1fr); }
       .col-card { flex: 0 0 50%; }
       .story-text, .boutique-text { padding: 56px 44px; }
       .story-heading { font-size: 28px; }
@@ -1115,8 +1308,8 @@
       .header-util-left .header-util-sep,
       .header-util-left a:last-child { display: none; }
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
-      /* スライダー：2枚表示 */
-      .prod-card { flex: 0 0 calc(50% - 2px); }
+      .prod-track { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 10px; }
+      .rank-track { grid-template-columns: repeat(2, 1fr); }
       .mag-grid { grid-template-columns: 1fr; }
       .ls-grid { grid-template-columns: repeat(2, 1fr); }
       .story-sec { grid-template-columns: 1fr; }
@@ -1138,9 +1331,9 @@
       .cat-grid { grid-template-columns: repeat(2, 1fr); }
       .ls-grid { grid-template-columns: repeat(2, 1fr); }
       .footer-cols { grid-template-columns: 1fr; }
-      /* スライダー：1.5枚表示（次の存在を示唆）*/
-      .prod-card { flex: 0 0 72%; }
-      .products-sec, .magazine-sec { padding: 40px 16px 48px; }
+      .prod-track { grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 0 8px; }
+      .rank-track { grid-template-columns: repeat(2, 1fr); }
+      .products-sec, .ranking-sec, .magazine-sec { padding: 40px 0 48px; }
     }
   </style>
 </head>
@@ -1189,11 +1382,11 @@
       </div>
     </div>
     <nav class="main-nav">
-      <a href="#categories" class="on">家具</a>
-      <a href="#categories">テキスタイル</a>
-      <a href="#categories">照明</a>
-      <a href="#categories">キッチン</a>
-      <a href="#categories">オブジェ</a>
+      <a href="#products" class="on">家具</a>
+      <a href="#products">テキスタイル</a>
+      <a href="#products">照明</a>
+      <a href="#products">キッチン</a>
+      <a href="#products">オブジェ</a>
       <a href="#brand">ブランド</a>
       <a href="#store">店舗</a>
     </nav>
@@ -1201,189 +1394,49 @@
 
   <!-- ===== ヒーローセクション（Figma設計準拠：1440×820 / 左580テキスト + 右860画像）===== -->
   <section class="hero-sec">
-    <!-- 左：テキストパネル -->
+    <!-- フル幅背景画像 -->
+    <div class="hero-img" style="background-image: url('/hay-hero.png');"></div>
+    <!-- グラデーションオーバーレイ -->
+    <div class="hero-overlay"></div>
+    <!-- 左下テキストオーバーレイ -->
     <div class="hero-text">
-      <span class="hero-brand-lbl">É P U R E</span>
-      <div class="hero-brand-rule"></div>
-      <p class="hero-col-lbl">SS 2026 — Nouvelle Collection</p>
+      <span class="hero-col-lbl">SS 2026 — Nouvelle Collection</span>
       <h1 class="hero-headline">the one<br><em>and only.</em></h1>
       <p class="hero-body">余分なものを削ぎ落としたとき、<br>素材が本来持つ美しさが、<br>静かに浮かびあがってきます。</p>
       <a href="#collection" class="hero-cta">コレクションを見る →</a>
       <span class="hero-indicator">01 / 03</span>
     </div>
-    <!-- 右：エディトリアル画像 + スクロールインジケーター -->
-    <div class="hero-img" style="background-image: url('https://images.unsplash.com/photo-1540574163026-643ea20ade25?w=1400&q=95&fit=crop&crop=center');">
-      <div class="hero-scroll">
-        <span class="hero-scroll-txt">Scroll</span>
-        <div class="hero-scroll-line"></div>
-      </div>
+    <!-- スクロールインジケーター（右下） -->
+    <div class="hero-scroll">
+      <span class="hero-scroll-txt">Scroll</span>
+      <div class="hero-scroll-line"></div>
     </div>
   </section>
 
-  <!-- ===== コレクション スライダー ===== -->
-  <!-- A.P.C.スタイル：全カード均一幅33%・縦長ポートレート・5枚横スクロール -->
-  <section class="col-slider" id="collection">
-    <button class="col-arrow prev" id="colPrev" aria-label="前へ">
-      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M8 1.5L3 6l5 4.5"/>
-      </svg>
-    </button>
-    <div class="col-track" id="colTrack">
-
-      <!-- 1: SS2026 メインコレクション -->
-      <div class="col-card">
-        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=85&fit=crop&crop=center');"></div>
-        <div class="col-body">
-          <p class="col-label">2026 Spring / Summer</p>
-          <p class="col-title">新しい静謐。<br>SS2026 コレクション</p>
-          <a href="#products" class="link-arrow">コレクションを見る →</a>
-        </div>
-      </div>
-
-      <!-- 2: テキスタイル -->
-      <div class="col-card">
-        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=800&q=85&fit=crop&crop=center');"></div>
-        <div class="col-body">
-          <p class="col-label">Textile</p>
-          <p class="col-title">テキスタイル<br>コレクション</p>
-          <a href="#categories" class="link-arrow">ページを見る →</a>
-        </div>
-      </div>
-
-      <!-- 3: 照明 -->
-      <div class="col-card">
-        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=800&q=85&fit=crop&crop=center');"></div>
-        <div class="col-body">
-          <p class="col-label">Lighting</p>
-          <p class="col-title">照明<br>コレクション</p>
-          <a href="#categories" class="link-arrow">ページを見る →</a>
-        </div>
-      </div>
-
-      <!-- 4: 家具 -->
-      <div class="col-card">
-        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&fit=crop&crop=center');"></div>
-        <div class="col-body">
-          <p class="col-label">Furniture</p>
-          <p class="col-title">家具<br>コレクション</p>
-          <a href="#categories" class="link-arrow">ページを見る →</a>
-        </div>
-      </div>
-
-      <!-- 5: オブジェ -->
-      <div class="col-card">
-        <div class="col-img" style="background-image: url('https://images.unsplash.com/photo-1616137466211-f939a420be84?w=800&q=85&fit=crop&crop=center');"></div>
-        <div class="col-body">
-          <p class="col-label">Objects</p>
-          <p class="col-title">オブジェ<br>コレクション</p>
-          <a href="#categories" class="link-arrow">ページを見る →</a>
-        </div>
-      </div>
-
-    </div>
-    <button class="col-arrow next" id="colNext" aria-label="次へ">
-      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5">
-        <path d="M4 1.5l5 4.5-5 4.5"/>
-      </svg>
-    </button>
-  </section>
 
   <!-- ===== カテゴリグリッド 4列 ===== -->
-  <section class="fade-in" id="categories">
-    <div class="cat-grid">
-      <!-- 家具：広い空間感のある室内写真 -->
-      <a href="#products" class="cat-tile">
-        <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=700&q=85&fit=crop&crop=center');"></div>
-        <div class="cat-tile-overlay"></div>
-        <div class="cat-tile-info">
-          <p class="cat-tile-name">家具</p>
-          <p class="cat-tile-sub">Furniture →</p>
-        </div>
-      </a>
-      <!-- テキスタイル：テクスチャのある素材感 -->
-      <a href="#products" class="cat-tile">
-        <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=700&q=85&fit=crop&crop=center');"></div>
-        <div class="cat-tile-overlay"></div>
-        <div class="cat-tile-info">
-          <p class="cat-tile-name">テキスタイル</p>
-          <p class="cat-tile-sub">Textile →</p>
-        </div>
-      </a>
-      <!-- 照明：光のある空間 -->
-      <a href="#products" class="cat-tile">
-        <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1526040652367-ac003a0475fe?w=700&q=85&fit=crop&crop=center');"></div>
-        <div class="cat-tile-overlay"></div>
-        <div class="cat-tile-info">
-          <p class="cat-tile-name">照明</p>
-          <p class="cat-tile-sub">Lighting →</p>
-        </div>
-      </a>
-      <!-- オブジェ：マーブルトレー -->
-      <a href="#products" class="cat-tile">
-        <div class="cat-tile-bg" style="background-image: url('https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=700&q=85&fit=crop&crop=center');"></div>
-        <div class="cat-tile-overlay"></div>
-        <div class="cat-tile-info">
-          <p class="cat-tile-name">オブジェ</p>
-          <p class="cat-tile-sub">Objects →</p>
-        </div>
-      </a>
-    </div>
-  </section>
 
   <!-- ===== プロダクトグリッド 5列 ===== -->
   <section class="products-sec fade-in" id="products">
     <div class="section-hd">
       <h2 class="section-ttl">新着アイテム</h2>
-      <a href="#categories" class="section-more">すべて見る</a>
+      <a href="#products" class="section-more">すべて見る</a>
+    </div>
+    <div class="new-items-title-wrap">
+      <h2 class="new-items-main-title">NEW ITEMS</h2>
+      <p class="new-items-sub-label">新着商品</p>
     </div>
     <div class="prod-slider" id="prodSlider">
-      <!-- 前へ矢印 -->
-      <button class="prod-arrow prev" id="prodPrev" aria-label="前へ" disabled>
-        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M9 2L4 7l5 5"/>
-        </svg>
-      </button>
-      <!-- 次へ矢印 -->
-      <button class="prod-arrow next" id="prodNext" aria-label="次へ">
-        <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5">
-          <path d="M5 2l5 5-5 5"/>
-        </svg>
-      </button>
-
       <div class="prod-track" id="prodTrack">
-
-      <!-- P1: ラウンジチェア -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p1"
-         data-name="ウォールナット材 ラウンジチェア"
-         data-price="148000"
-         data-img="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&q=80&fit=crop&crop=center');"></div>
-          <span class="prod-badge">NEW</span>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#c5b89a;"></span>
-            <span class="cdot" style="background:#2a2826;"></span>
-            <span class="cdot" style="background:#8a7a6a;"></span>
-          </div>
-          <p class="prod-name">ウォールナット材 ラウンジチェア</p>
-          <p class="prod-price">¥148,000</p>
-        </div>
-      </a>
 
       <!-- P2: リネン クッションカバー -->
       <a href="javascript:void(0)" class="prod-card"
          data-id="p2"
          data-name="リネン クッションカバー"
          data-price="14800"
-         data-img="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=200&q=70&fit=crop&crop=center">
+         data-img="/prod-p2-cushion.jpg">
         <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=600&q=80&fit=crop&crop=center');"></div>
+          <div class="prod-img" style="background-image: url('/prod-p2-cushion.jpg"></div>
           <div class="prod-hover-layer">
             <button class="prod-add-btn">カートに追加</button>
           </div>
@@ -1404,20 +1457,20 @@
          data-id="p3"
          data-name="磁器製 フラワーベース"
          data-price="28000"
-         data-img="https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=200&q=70&fit=crop&crop=center">
+         data-img="/prod-p3-totebag.jpg">
         <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=600&q=80&fit=crop&crop=center');"></div>
+          <div class="prod-img" style="background-image: url('/prod-p3-totebag.jpg"></div>
           <div class="prod-hover-layer">
             <button class="prod-add-btn">カートに追加</button>
           </div>
         </div>
         <div class="prod-body">
           <div class="prod-colors">
-            <span class="cdot on" style="background:#f0ece4;"></span>
-            <span class="cdot" style="background:#d4c8b8;"></span>
+            <span class="cdot on" style="background:#b5603a;"></span>
+            <span class="cdot" style="background:#c8a882;"></span>
           </div>
-          <p class="prod-name">磁器製 フラワーベース</p>
-          <p class="prod-price">¥28,000</p>
+          <p class="prod-name">ÉPURE トートバッグ</p>
+          <p class="prod-price">¥18,000</p>
         </div>
       </a>
 
@@ -1426,10 +1479,9 @@
          data-id="p4"
          data-name="ウール ブランケット"
          data-price="42000"
-         data-img="https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=200&q=70&fit=crop&crop=center">
+         data-img="/prod-p4-blanket.jpg">
         <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1631049552240-59c37f38802b?w=600&q=80&fit=crop&crop=center');"></div>
-          <span class="prod-badge">BESTSELLER</span>
+          <div class="prod-img" style="background-image: url('/prod-p4-blanket.jpg"></div>
           <div class="prod-hover-layer">
             <button class="prod-add-btn">カートに追加</button>
           </div>
@@ -1445,25 +1497,26 @@
         </div>
       </a>
 
-      <!-- P5: 真鍮製 フロアランプ -->
+      <!-- P5: KNIT コートラック -->
       <a href="javascript:void(0)" class="prod-card"
          data-id="p5"
-         data-name="真鍮製 フロアランプ"
-         data-price="88000"
-         data-img="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=200&q=70&fit=crop&crop=center">
+         data-name="KNIT コートラック"
+         data-price="39600"
+         data-img="/prod-p5-knit.jpg">
         <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=600&q=80&fit=crop&crop=center');"></div>
+          <div class="prod-img" style="background-image: url('/prod-p5-knit.jpg')"></div>
           <div class="prod-hover-layer">
             <button class="prod-add-btn">カートに追加</button>
           </div>
         </div>
         <div class="prod-body">
           <div class="prod-colors">
-            <span class="cdot on" style="background:#c8a86a;"></span>
+            <span class="cdot on" style="background:#c8a36e;"></span>
             <span class="cdot" style="background:#2a2826;"></span>
+            <span class="cdot" style="background:#8b9e7a;"></span>
           </div>
-          <p class="prod-name">真鍮製 フロアランプ</p>
-          <p class="prod-price">¥88,000</p>
+          <p class="prod-name">KNIT コートラック</p>
+          <p class="prod-price">¥39,600</p>
         </div>
       </a>
 
@@ -1472,10 +1525,10 @@
          data-id="p6"
          data-name="ウォールナット ソファ 2.5人掛け"
          data-price="520000"
-         data-img="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=200&q=70&fit=crop&crop=center">
+         data-img="/prod-p6-sofa.jpg">
         <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&fit=crop&crop=center');"></div>
-          <span class="prod-badge">NEW</span>
+          <div class="prod-img" style="background-image: url('/prod-p6-sofa.jpg"></div>
+
           <div class="prod-hover-layer">
             <button class="prod-add-btn">カートに追加</button>
           </div>
@@ -1491,211 +1544,89 @@
         </div>
       </a>
 
-      <!-- P7: ハンドメイド セラミック マグ -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p7"
-         data-name="ハンドメイド セラミック マグ"
-         data-price="6800"
-         data-img="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop&crop=center');"></div>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#e8e0d5;"></span>
-            <span class="cdot" style="background:#8a8680;"></span>
-          </div>
-          <p class="prod-name">ハンドメイド セラミック マグ</p>
-          <p class="prod-price">¥6,800</p>
-        </div>
-      </a>
-
-      <!-- P8: ベルギーリネン シーツセット -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p8"
-         data-name="ベルギーリネン シーツセット"
-         data-price="48000"
-         data-img="https://images.unsplash.com/photo-1537726235470-8504e3beef77?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1537726235470-8504e3beef77?w=600&q=80&fit=crop&crop=center');"></div>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#ede8e1;"></span>
-            <span class="cdot" style="background:#c8bcaa;"></span>
-            <span class="cdot" style="background:#7a8a7a;"></span>
-          </div>
-          <p class="prod-name">ベルギーリネン シーツセット</p>
-          <p class="prod-price">¥48,000</p>
-        </div>
-      </a>
-
-      <!-- P9: ミニマル ウォールミラー -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p9"
-         data-name="ミニマル ウォールミラー"
-         data-price="68000"
-         data-img="https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=600&q=80&fit=crop&crop=center');"></div>
-          <span class="prod-badge">BESTSELLER</span>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#d4c8a8;"></span>
-            <span class="cdot" style="background:#2a2826;"></span>
-          </div>
-          <p class="prod-name">ミニマル ウォールミラー</p>
-          <p class="prod-price">¥68,000</p>
-        </div>
-      </a>
-
-      <!-- P10: コットン バスタオル 2枚セット -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p10"
-         data-name="コットン バスタオル 2枚セット"
-         data-price="18000"
-         data-img="https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=600&q=80&fit=crop&crop=center');"></div>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#f0ece4;"></span>
-            <span class="cdot" style="background:#c8bcaa;"></span>
-            <span class="cdot" style="background:#8a8a7a;"></span>
-          </div>
-          <p class="prod-name">コットン バスタオル 2枚セット</p>
-          <p class="prod-price">¥18,000</p>
-        </div>
-      </a>
-
-      <!-- P11: シルク クッションカバー -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p11"
-         data-name="シルク クッションカバー"
-         data-price="28000"
-         data-img="https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=600&q=80&fit=crop&crop=center');"></div>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#c8c0b8;"></span>
-            <span class="cdot" style="background:#8a9898;"></span>
-            <span class="cdot" style="background:#3a3028;"></span>
-          </div>
-          <p class="prod-name">シルク クッションカバー</p>
-          <p class="prod-price">¥28,000</p>
-        </div>
-      </a>
-
-      <!-- P12: テラコッタ プランター -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p12"
-         data-name="テラコッタ プランター"
-         data-price="22000"
-         data-img="https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=600&q=80&fit=crop&crop=center');"></div>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#c8a882;"></span>
-            <span class="cdot" style="background:#8a6858;"></span>
-          </div>
-          <p class="prod-name">テラコッタ プランター</p>
-          <p class="prod-price">¥22,000</p>
-        </div>
-      </a>
-
       <!-- P13: ブラス ブックエンド -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p13"
-         data-name="ブラス ブックエンド"
-         data-price="32000"
-         data-img="https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=600&q=80&fit=crop&crop=center');"></div>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#c8a86a;"></span>
-            <span class="cdot" style="background:#2a2826;"></span>
-          </div>
-          <p class="prod-name">ブラス ブックエンド</p>
-          <p class="prod-price">¥32,000</p>
-        </div>
-      </a>
 
-      <!-- P14: ナチュラルキャンドル セット -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p14"
-         data-name="ナチュラルキャンドル セット"
-         data-price="9800"
-         data-img="https://images.unsplash.com/photo-1517705008128-361805f42e86?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1517705008128-361805f42e86?w=600&q=80&fit=crop&crop=center');"></div>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#f0e8d8;"></span>
-            <span class="cdot" style="background:#d8c8a8;"></span>
-          </div>
-          <p class="prod-name">ナチュラルキャンドル セット</p>
-          <p class="prod-price">¥9,800</p>
-        </div>
-      </a>
-
-      <!-- P15: アロマ ディフューザー -->
-      <a href="javascript:void(0)" class="prod-card"
-         data-id="p15"
-         data-name="アロマ ディフューザー"
-         data-price="38000"
-         data-img="https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=200&q=70&fit=crop&crop=center">
-        <div class="prod-img-wrap">
-          <div class="prod-img" style="background-image: url('https://images.unsplash.com/photo-1556228453-efd6c1ff04f6?w=600&q=80&fit=crop&crop=center');"></div>
-          <span class="prod-badge">NEW</span>
-          <div class="prod-hover-layer">
-            <button class="prod-add-btn">カートに追加</button>
-          </div>
-        </div>
-        <div class="prod-body">
-          <div class="prod-colors">
-            <span class="cdot on" style="background:#f0ece4;"></span>
-            <span class="cdot" style="background:#2a2826;"></span>
-          </div>
-          <p class="prod-name">アロマ ディフューザー</p>
-          <p class="prod-price">¥38,000</p>
-        </div>
-      </a>
 
       </div><!-- /.prod-track -->
     </div><!-- /.prod-slider -->
+  </section>
+
+  <!-- ===== ランキングセクション（HAY Japan スタイル）===== -->
+  <section class="ranking-sec fade-in" id="ranking">
+    <!-- 中央揃えタイトル -->
+    <div class="ranking-title-wrap">
+      <h2 class="ranking-main-title">RANKING</h2>
+      <p class="ranking-cat-label">FURNITURE</p>
+    </div>
+    <!-- ランキンググリッド（上位5商品）バッジはカードレベルに配置 -->
+    <div class="rank-track" id="rankTrack">
+
+      <a href="javascript:void(0)" class="prod-card rank-card"
+         data-id="p1" data-name="ウォールナット材 ラウンジチェア" data-price="148000" data-img="/prod-p1-chair.jpg">
+        <span class="rank-badge">1</span>
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('/prod-p1-chair.jpg')"></div>
+          <div class="prod-hover-layer"><button class="prod-add-btn">カートに追加</button></div>
+        </div>
+        <div class="prod-body">
+          <p class="prod-name">ウォールナット材 ラウンジチェア</p>
+          <p class="prod-price">¥148,000</p>
+        </div>
+      </a>
+
+      <a href="javascript:void(0)" class="prod-card rank-card"
+         data-id="p5" data-name="KNIT コートラック" data-price="39600" data-img="/prod-p5-knit.jpg">
+        <span class="rank-badge">2</span>
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('/prod-p5-knit.jpg')"></div>
+          <div class="prod-hover-layer"><button class="prod-add-btn">カートに追加</button></div>
+        </div>
+        <div class="prod-body">
+          <p class="prod-name">KNIT コートラック</p>
+          <p class="prod-price">¥39,600</p>
+        </div>
+      </a>
+
+      <a href="javascript:void(0)" class="prod-card rank-card"
+         data-id="p6" data-name="グリーン ソファ" data-price="220000" data-img="/prod-p6-sofa.jpg">
+        <span class="rank-badge">3</span>
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('/prod-p6-sofa.jpg')"></div>
+          <div class="prod-hover-layer"><button class="prod-add-btn">カートに追加</button></div>
+        </div>
+        <div class="prod-body">
+          <p class="prod-name">グリーン ソファ</p>
+          <p class="prod-price">¥220,000</p>
+        </div>
+      </a>
+
+      <a href="javascript:void(0)" class="prod-card rank-card"
+         data-id="p4" data-name="ウール ブランケット" data-price="42000" data-img="/prod-p4-blanket.jpg">
+        <span class="rank-badge">4</span>
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('/prod-p4-blanket.jpg')"></div>
+          <div class="prod-hover-layer"><button class="prod-add-btn">カートに追加</button></div>
+        </div>
+        <div class="prod-body">
+          <p class="prod-name">ウール ブランケット</p>
+          <p class="prod-price">¥42,000</p>
+        </div>
+      </a>
+
+      <a href="javascript:void(0)" class="prod-card rank-card"
+         data-id="p2" data-name="ストライプ クッションカバー" data-price="14800" data-img="/prod-p2-cushion.jpg">
+        <span class="rank-badge">5</span>
+        <div class="prod-img-wrap">
+          <div class="prod-img" style="background-image: url('/prod-p2-cushion.jpg')"></div>
+          <div class="prod-hover-layer"><button class="prod-add-btn">カートに追加</button></div>
+        </div>
+        <div class="prod-body">
+          <p class="prod-name">ストライプ クッションカバー</p>
+          <p class="prod-price">¥14,800</p>
+        </div>
+      </a>
+
+    </div>
   </section>
 
   <!-- ===== マガジン ===== -->
@@ -1703,14 +1634,6 @@
     <div class="section-hd">
       <h2 class="section-ttl">ÉPURE マガジン</h2>
       <a href="#magazine" class="section-more">すべての記事</a>
-    </div>
-    <div class="mag-tags">
-      <button class="mag-tag on">#すべて</button>
-      <button class="mag-tag">#インテリア</button>
-      <button class="mag-tag">#テキスタイル</button>
-      <button class="mag-tag">#職人</button>
-      <button class="mag-tag">#暮らし</button>
-      <button class="mag-tag">#コレクション</button>
     </div>
     <div class="mag-grid">
       <a href="#magazine" class="art-card">
@@ -1747,38 +1670,6 @@
   </section>
 
   <!-- ===== ライフスタイル タイル 4列（正方形・エディトリアル）===== -->
-  <section class="fade-in" id="lifestyle">
-    <div class="ls-grid">
-      <a href="#lifestyle" class="ls-tile">
-        <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1484101403633-562f891dc89a?w=700&q=85&fit=crop&crop=center');"></div>
-        <div class="ls-overlay">
-          <p class="ls-name">Atelier</p>
-          <p class="ls-sub">アトリエについて →</p>
-        </div>
-      </a>
-      <a href="#collection" class="ls-tile">
-        <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=700&q=85&fit=crop&crop=center');"></div>
-        <div class="ls-overlay">
-          <p class="ls-name">Collection</p>
-          <p class="ls-sub">最新コレクション →</p>
-        </div>
-      </a>
-      <a href="#brand" class="ls-tile">
-        <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1517705008128-361805f42e86?w=700&q=85&fit=crop&crop=center');"></div>
-        <div class="ls-overlay">
-          <p class="ls-name">Savoir-Faire</p>
-          <p class="ls-sub">職人の技術 →</p>
-        </div>
-      </a>
-      <a href="#store" class="ls-tile">
-        <div class="ls-bg" style="background-image: url('https://images.unsplash.com/photo-1493663284031-b7e3aefcae8e?w=700&q=85&fit=crop&crop=center');"></div>
-        <div class="ls-overlay">
-          <p class="ls-name">Store</p>
-          <p class="ls-sub">店舗情報 →</p>
-        </div>
-      </a>
-    </div>
-  </section>
 
   <!-- ===== ブランドストーリー ===== -->
   <section class="story-sec fade-in" id="brand">
@@ -1799,7 +1690,7 @@
 
   <!-- ===== ストア案内 ===== -->
   <section class="boutique-sec fade-in" id="store">
-    <div class="boutique-img" style="background-image: url('https://images.unsplash.com/photo-1566665797739-1674de7a421a?w=1000&q=85&fit=crop&crop=center');"></div>
+    <div class="boutique-img" style="background-image: url('https://images.pexels.com/photos/4915536/pexels-photo-4915536.jpeg?auto=compress&cs=tinysrgb&w=1000&h=1200&fit=crop');"></div>
     <div class="boutique-text">
       <p class="story-label">ストア</p>
       <h2 class="story-heading">空間そのものが、<br>作品である</h2>
@@ -1826,14 +1717,85 @@
     <p class="nl-note">プライバシーポリシーに同意の上、ご登録ください。いつでも配信停止できます。</p>
   </section>
 
+  <!-- ===== お問い合わせ ===== -->
+  <section class="contact-sec fade-in" id="contact">
+    <p class="contact-label">CONTACT</p>
+    <h2 class="contact-heading">担当スタッフへ<br>ご相談ください</h2>
+    <p class="contact-sub">
+      返品・交換、オーダーメイド、その他ご不明な点など、<br>
+      専任のスタッフが丁寧にご対応いたします。<br>
+      通常2営業日以内にご返信申し上げます。
+    </p>
+
+    <!-- 送信フォーム -->
+    <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)">
+      <div class="contact-row">
+        <!-- お名前 -->
+        <div class="contact-field">
+          <p class="contact-label-field">お名前 *</p>
+          <input class="contact-input" type="text" name="name" placeholder="山田 花子" required />
+        </div>
+        <!-- メールアドレス -->
+        <div class="contact-field">
+          <p class="contact-label-field">メールアドレス *</p>
+          <input class="contact-input" type="email" name="email" placeholder="hello@example.com" required />
+        </div>
+      </div>
+
+      <div class="contact-row" style="margin-bottom:1px">
+        <!-- お問い合わせ種別 -->
+        <div class="contact-field full">
+          <p class="contact-label-field">お問い合わせ種別 *</p>
+          <div class="contact-select-wrap">
+            <select class="contact-select" name="category" required>
+              <option value="" disabled selected>選択してください</option>
+              <option value="return">返品・交換について</option>
+              <option value="repair">修理・メンテナンス</option>
+              <option value="order">オーダーメイド・特注</option>
+              <option value="product">商品・在庫のお問い合わせ</option>
+              <option value="shipping">配送・お届けについて</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-row" style="margin-bottom:1px">
+        <!-- メッセージ -->
+        <div class="contact-field full">
+          <p class="contact-label-field">メッセージ *</p>
+          <textarea class="contact-textarea" name="message" placeholder="ご用件をできるだけ詳しくお聞かせください" required></textarea>
+        </div>
+      </div>
+
+      <div class="contact-submit">
+        <p class="contact-note">
+          送信いただいた情報はお問い合わせへの回答にのみ使用し、<br>
+          第三者へ提供することはございません。
+        </p>
+        <button class="contact-btn" type="submit">送信する</button>
+      </div>
+    </form>
+
+    <!-- 送信完了メッセージ -->
+    <div class="contact-thanks" id="contactThanks">
+      <div class="contact-thanks-mark">É P U R E</div>
+      <p class="contact-thanks-text">
+        お問い合わせいただきありがとうございます。<br>
+        担当スタッフより、2営業日以内にご連絡いたします。<br><br>
+        引き続き、ÉPUREをよろしくお願いいたします。
+      </p>
+    </div>
+  </section>
+
   <!-- ===== フッター ===== -->
   <footer class="site-footer">
     <div class="footer-cols">
       <div class="footer-col">
         <p class="footer-col-ttl">サポート</p>
         <ul>
-          <li><a href="#newsletter">お問い合わせ</a></li>
-          <li><a href="#newsletter">返品・交換について</a></li>
+          <li><a href="#contact">お問い合わせ</a></li>
+          <li><a href="#contact">返品・交換について</a></li>
           <li><a href="#newsletter">配送について</a></li>
           <li><a href="#newsletter">お支払い方法</a></li>
           <li><a href="#newsletter">よくある質問</a></li>
@@ -1881,66 +1843,6 @@
   </button>
 
   <script>
-    /* ===== コレクションスライダー ===== */
-    const colTrack = document.getElementById('colTrack');
-    const prevBtn  = document.getElementById('colPrev');
-    const nextBtn  = document.getElementById('colNext');
-
-    /* カード1枚分の幅（gap1px込み）を返す */
-    function getCardW() {
-      const c = colTrack.querySelector('.col-card');
-      return c ? c.offsetWidth + 1 : 427;
-    }
-
-    /* 矢印の表示/非表示を更新 */
-    function updateArrows() {
-      const atStart = colTrack.scrollLeft <= 4;
-      const atEnd   = colTrack.scrollLeft + colTrack.clientWidth >= colTrack.scrollWidth - 4;
-      prevBtn.style.opacity = atStart ? '0' : '1';
-      prevBtn.style.pointerEvents = atStart ? 'none' : 'auto';
-      nextBtn.style.opacity = atEnd   ? '0' : '1';
-      nextBtn.style.pointerEvents = atEnd   ? 'none' : 'auto';
-      updateDots();
-    }
-
-    nextBtn.addEventListener('click', () => {
-      colTrack.scrollBy({ left: getCardW(), behavior: 'smooth' });
-    });
-    prevBtn.addEventListener('click', () => {
-      colTrack.scrollBy({ left: -getCardW(), behavior: 'smooth' });
-    });
-    colTrack.addEventListener('scroll', updateArrows, { passive: true });
-
-    /* ドットインジケーター */
-    const TOTAL_CARDS = colTrack.querySelectorAll('.col-card').length;
-    const VISIBLE = 3; /* 同時表示枚数 */
-    const dotWrap = document.createElement('div');
-    dotWrap.style.cssText = 'display:flex;justify-content:center;gap:7px;padding:14px 0 4px;';
-    const dots = [];
-    for (let i = 0; i < TOTAL_CARDS - VISIBLE + 1; i++) {
-      const d = document.createElement('span');
-      d.style.cssText = 'width:5px;height:5px;border-radius:50%;background:var(--warm);transition:background 0.3s,transform 0.3s;cursor:pointer;';
-      d.addEventListener('click', () => {
-        colTrack.scrollTo({ left: getCardW() * i, behavior: 'smooth' });
-      });
-      dotWrap.appendChild(d);
-      dots.push(d);
-    }
-    colTrack.parentElement.appendChild(dotWrap);
-
-    function updateDots() {
-      const idx = Math.round(colTrack.scrollLeft / Math.max(getCardW(), 1));
-      dots.forEach((d, i) => {
-        const active = i === Math.min(idx, dots.length - 1);
-        d.style.background = active ? 'var(--dark)' : 'var(--warm)';
-        d.style.transform   = active ? 'scale(1.3)' : 'scale(1)';
-      });
-    }
-
-    /* 初期化 */
-    prevBtn.style.opacity = '0';
-    prevBtn.style.pointerEvents = 'none';
-    updateDots();
 
     /* ===== マガジンタグ切り替え ===== */
     document.querySelectorAll('.mag-tag').forEach(btn => {
@@ -2005,81 +1907,18 @@
       if (el) ioNav.observe(el);
     });
 
-    /* ===== スライダー スワイプ対応（タッチ）===== */
-    let touchStartX = 0;
-    colTrack.addEventListener('touchstart', e => {
-      touchStartX = e.touches[0].clientX;
-    }, { passive: true });
-    colTrack.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 40) {
-        colTrack.scrollBy({ left: dx < 0 ? getCardW() : -getCardW(), behavior: 'smooth' });
-      }
-    }, { passive: true });
-
-    /* ===== キーボード操作（スライダー）===== */
-    document.addEventListener('keydown', e => {
-      if (e.key === 'ArrowRight') colTrack.scrollBy({ left:  getCardW(), behavior: 'smooth' });
-      if (e.key === 'ArrowLeft')  colTrack.scrollBy({ left: -getCardW(), behavior: 'smooth' });
-    });
 
     /* ===== 新着アイテム スライダー ===== */
-    const prodTrack = document.getElementById('prodTrack');
-    const prodPrev  = document.getElementById('prodPrev');
-    const prodNext  = document.getElementById('prodNext');
-
-    // カード1枚分の幅を取得
-    function getProdCardW() {
-      const c = prodTrack.querySelector('.prod-card');
-      if (!c) return 200;
-      return c.getBoundingClientRect().width + 2; /* gap分を加算 */
-    }
-
-    // 矢印の有効/無効を更新
-    function updateProdArrows() {
-      const atStart = prodTrack.scrollLeft <= 4;
-      const atEnd   = prodTrack.scrollLeft + prodTrack.clientWidth >= prodTrack.scrollWidth - 4;
-      prodPrev.disabled = atStart;
-      prodNext.disabled = atEnd;
-    }
-
-    // ドットインジケーター生成
-    const PROD_TOTAL = prodTrack.querySelectorAll('.prod-card').length;
-    const prodDotWrap = document.createElement('div');
-    prodDotWrap.className = 'prod-dots';
-    for (let i = 0; i < PROD_TOTAL; i++) {
-      const d = document.createElement('button');
-      d.className = 'prod-dot' + (i === 0 ? ' on' : '');
-      d.setAttribute('aria-label', `${i + 1}枚目`);
-      d.addEventListener('click', () => {
-        prodTrack.scrollTo({ left: getProdCardW() * i, behavior: 'smooth' });
+    // ランキングタブ切り替え
+    const rankTabs = document.getElementById('rankTabs');
+    if (rankTabs) {
+      rankTabs.addEventListener('click', e => {
+        const tab = e.target.closest('.rank-tab');
+        if (!tab) return;
+        rankTabs.querySelectorAll('.rank-tab').forEach(t => t.classList.remove('on'));
+        tab.classList.add('on');
       });
-      prodDotWrap.appendChild(d);
     }
-    document.getElementById('prodSlider').after(prodDotWrap);
-
-    // スクロール時にドットを更新
-    prodTrack.addEventListener('scroll', () => {
-      updateProdArrows();
-      const idx = Math.round(prodTrack.scrollLeft / Math.max(getProdCardW(), 1));
-      document.querySelectorAll('.prod-dot').forEach((d, i) => {
-        d.classList.toggle('on', i === idx);
-      });
-    }, { passive: true });
-
-    // 矢印クリック
-    prodNext.addEventListener('click', () => prodTrack.scrollBy({ left:  getProdCardW(), behavior: 'smooth' }));
-    prodPrev.addEventListener('click', () => prodTrack.scrollBy({ left: -getProdCardW(), behavior: 'smooth' }));
-
-    // タッチスワイプ
-    let prodTouchX = 0;
-    prodTrack.addEventListener('touchstart', e => { prodTouchX = e.touches[0].clientX; }, { passive: true });
-    prodTrack.addEventListener('touchend', e => {
-      const dx = e.changedTouches[0].clientX - prodTouchX;
-      if (Math.abs(dx) > 40) prodTrack.scrollBy({ left: dx < 0 ? getProdCardW() : -getProdCardW(), behavior: 'smooth' });
-    }, { passive: true });
-
-    updateProdArrows();
 
     /* ===== ページトップボタン ===== */
     const backTop = document.getElementById('backTop');
@@ -2169,7 +2008,7 @@
       flex-shrink: 0;
     }
     .cart-drawer-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 18px;
       font-weight: 400;
       letter-spacing: 0.08em;
@@ -2309,7 +2148,7 @@
       color: var(--gray);
     }
     .cart-subtotal-val {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 22px;
       font-weight: 400;
       color: var(--black);
@@ -2549,6 +2388,51 @@
 
     // 初期バッジ反映
     updateCartBadge();
+
+    /* ===== お問い合わせフォーム送信 ===== */
+    async function handleContactSubmit(e) {
+      e.preventDefault();
+      const form   = document.getElementById('contactForm');
+      const thanks = document.getElementById('contactThanks');
+      const btn    = form.querySelector('.contact-btn');
+
+      // フォームデータ取得
+      const data = {
+        name:     form.querySelector('[name="name"]').value.trim(),
+        email:    form.querySelector('[name="email"]').value.trim(),
+        category: form.querySelector('[name="category"]').value,
+        message:  form.querySelector('[name="message"]').value.trim(),
+      };
+
+      // 送信中状態
+      btn.disabled    = true;
+      btn.textContent = '送信中...';
+
+      try {
+        const resp = await fetch('/api/contact', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(data),
+        });
+
+        const result = await resp.json();
+
+        if (!resp.ok || result.error) {
+          throw new Error(result.error || '送信エラー');
+        }
+
+        // 送信完了
+        form.style.display = 'none';
+        thanks.classList.add('show');
+        document.getElementById('contact').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      } catch (err) {
+        // エラー表示
+        btn.disabled    = false;
+        btn.textContent = '送信する';
+        alert('送信に失敗しました。\n' + err.message + '\n\nしばらくしてから再度お試しください。');
+      }
+    }
   </script>
 
   <!-- ===== ÉPURE コンシェルジュ チャットウィジェット ===== -->
@@ -2620,7 +2504,7 @@
       gap: 2px;
     }
     .chat-header-title {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-weight: 400;
       font-size: 16px;
       letter-spacing: 0.14em;
@@ -2679,7 +2563,7 @@
       padding: 16px 8px 8px;
     }
     .chat-welcome-mark {
-      font-family: 'Cormorant Garamond', serif;
+      font-family: 'Inter', sans-serif;
       font-size: 22px;
       font-weight: 300;
       letter-spacing: 0.2em;
@@ -2796,6 +2680,31 @@
     .chat-send-btn:hover { background: var(--black); }
     .chat-send-btn:disabled { background: var(--warm); cursor: not-allowed; }
     .chat-send-btn svg { width: 15px; height: 15px; }
+
+    /* ---- エスカレーションボタン ---- */
+    .chat-escalate {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: flex-start;
+    }
+    .chat-escalate-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      background: var(--dark);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s;
+      text-decoration: none;
+    }
+    .chat-escalate-btn:hover { background: var(--black); }
+    .chat-escalate-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
 
     /* ---- モバイル対応 ---- */
     @media (max-width: 480px) {
@@ -3033,9 +2942,34 @@
             }
           }
 
-          // 履歴に追加
+          // エスカレーションシグナルを検知してボタン表示
           if (assistantText) {
-            messageHistory.push({ role: 'assistant', content: assistantText });
+            const needsEscalate = assistantText.includes('[[ESCALATE]]');
+            // シグナルテキストを取り除いて表示
+            const cleanText = assistantText.replace('[[ESCALATE]]', '').trim();
+            if (bubble) bubble.textContent = cleanText;
+
+            if (needsEscalate) {
+              // エスカレーションUI を生成
+              const escWrapper = document.createElement('div');
+              escWrapper.className = 'chat-msg assistant';
+              const escDiv = document.createElement('div');
+              escDiv.className = 'chat-escalate';
+              escDiv.innerHTML = `
+                <a class="chat-escalate-btn" href="#contact" onclick="document.getElementById('chatDrawer').classList.remove('open')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                    <polyline points="22,6 12,13 2,6"/>
+                  </svg>
+                  担当スタッフへ問い合わせる
+                </a>`;
+              escWrapper.appendChild(escDiv);
+              messagesEl.appendChild(escWrapper);
+              scrollToBottom();
+            }
+
+            // 履歴にはシグナルなしのテキストを保存
+            messageHistory.push({ role: 'assistant', content: cleanText });
           }
 
         } catch (err) {

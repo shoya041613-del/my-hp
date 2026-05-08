@@ -24,8 +24,9 @@ try {
   // .env が存在しない場合は既存の環境変数をそのまま使う
 }
 
-const express  = require('express');
-const Anthropic = require('@anthropic-ai/sdk');
+const express    = require('express');
+const Anthropic  = require('@anthropic-ai/sdk');
+const nodemailer = require('nodemailer');
 
 const app  = express();
 app.use(express.json());
@@ -59,7 +60,15 @@ const SYSTEM_PROMPT = `あなたはÉPURE（エピュール）のブランドコ
 - 掲載されていない詳細についてはお問い合わせフォームまたはストアへのご来店をご案内ください
 - 絵文字は使わず、品のある文体を維持してください
 - ÉPUREのブランド価値観（純粋・静謐・本質）を体現したトーンでお話しください
-- 過剰な表現を避け、簡潔で誠実な接客スタイルを心がけてください`;
+- 過剰な表現を避け、簡潔で誠実な接客スタイルを心がけてください
+
+【エスカレーション】
+以下のような場合は、回答の末尾に必ず「[[ESCALATE]]」というテキストを付加してください：
+- ブランドや商品に関する詳細な問い合わせでAIでは対応できないと判断した場合
+- クレーム・返品・修理・オーダーメイドなど個別対応が必要な場合
+- 価格交渉・特別対応のご要望
+- その他、担当スタッフへの引き継ぎが適切と判断した場合
+「[[ESCALATE]]」は必ず文末に付加し、それ以外の場所には絶対に使用しないこと。`;
 
 /**
  * POST /api/chat
@@ -140,6 +149,88 @@ app.post('/api/chat', async (req, res) => {
     res.write(`data: ${JSON.stringify({ error: userMsg })}\n\n`);
     res.write('data: [DONE]\n\n');
     res.end();
+  }
+});
+
+/**
+ * POST /api/contact
+ * お問い合わせフォームのメール送信
+ * リクエストボディ: { name, email, category, message }
+ */
+app.post('/api/contact', async (req, res) => {
+  const { name, email, category, message } = req.body;
+
+  // バリデーション
+  if (!name || !email || !category || !message) {
+    return res.status(400).json({ error: '必須項目が不足しています' });
+  }
+
+  // Gmail の認証情報確認
+  if (!process.env.GMAIL_USER || !process.env.GMAIL_PASS) {
+    return res.status(500).json({ error: 'メール設定が未完了です' });
+  }
+
+  // カテゴリーの日本語変換
+  const categoryMap = {
+    return:   '返品・交換について',
+    repair:   '修理・メンテナンス',
+    order:    'オーダーメイド・特注',
+    product:  '商品・在庫のお問い合わせ',
+    shipping: '配送・お届けについて',
+    other:    'その他',
+  };
+  const categoryLabel = categoryMap[category] || category;
+
+  // Nodemailer トランスポーター（Gmail SMTP）
+  const transporter = nodemailer.createTransport({
+    service: 'gmail',
+    auth: {
+      user: process.env.GMAIL_USER,
+      pass: process.env.GMAIL_PASS,
+    },
+  });
+
+  // メール本文
+  const mailOptions = {
+    from: `"ÉPURE お問い合わせ" <${process.env.GMAIL_USER}>`,
+    to:   process.env.GMAIL_USER,   // 受信先（自分のGmail）
+    replyTo: email,                 // 返信先はお客様のメアド
+    subject: `【ÉPURE】お問い合わせ：${categoryLabel}（${name} 様）`,
+    text: [
+      `■ お名前: ${name}`,
+      `■ メールアドレス: ${email}`,
+      `■ 種別: ${categoryLabel}`,
+      `■ メッセージ:\n${message}`,
+    ].join('\n\n'),
+    html: `
+      <div style="font-family:'Helvetica Neue',Arial,sans-serif;max-width:600px;margin:0 auto;color:#2a2826;">
+        <div style="background:#2a2826;padding:24px 32px;">
+          <p style="font-family:Georgia,serif;font-size:20px;letter-spacing:0.2em;color:#f5f3ef;margin:0;">É P U R E</p>
+          <p style="font-size:11px;color:rgba(245,243,239,0.5);margin:4px 0 0;letter-spacing:0.15em;">NEW INQUIRY</p>
+        </div>
+        <div style="padding:32px;background:#f5f3ef;border:1px solid #eceae6;">
+          <table style="width:100%;border-collapse:collapse;">
+            <tr><td style="padding:12px 0;border-bottom:1px solid #eceae6;font-size:11px;color:#8a8680;letter-spacing:0.1em;width:140px;">お名前</td><td style="padding:12px 0;border-bottom:1px solid #eceae6;font-size:13px;">${name}</td></tr>
+            <tr><td style="padding:12px 0;border-bottom:1px solid #eceae6;font-size:11px;color:#8a8680;letter-spacing:0.1em;">メールアドレス</td><td style="padding:12px 0;border-bottom:1px solid #eceae6;font-size:13px;"><a href="mailto:${email}" style="color:#2a2826;">${email}</a></td></tr>
+            <tr><td style="padding:12px 0;border-bottom:1px solid #eceae6;font-size:11px;color:#8a8680;letter-spacing:0.1em;">お問い合わせ種別</td><td style="padding:12px 0;border-bottom:1px solid #eceae6;font-size:13px;">${categoryLabel}</td></tr>
+          </table>
+          <div style="margin-top:24px;">
+            <p style="font-size:11px;color:#8a8680;letter-spacing:0.1em;margin-bottom:10px;">メッセージ</p>
+            <p style="font-size:13px;line-height:1.9;white-space:pre-wrap;">${message.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</p>
+          </div>
+        </div>
+        <div style="padding:16px 32px;background:#eceae6;">
+          <p style="font-size:10px;color:#8a8680;margin:0;">このメールは ÉPURE ウェブサイトのお問い合わせフォームより自動送信されました。</p>
+        </div>
+      </div>`,
+  };
+
+  try {
+    await transporter.sendMail(mailOptions);
+    res.json({ ok: true });
+  } catch (err) {
+    console.error('メール送信エラー:', err.message);
+    res.status(500).json({ error: 'メールの送信に失敗しました。しばらくしてから再度お試しください。' });
   }
 });
 

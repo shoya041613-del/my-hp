@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1" />
+  <title>ÉPUREについて | 【公式】ÉPUREオンラインストア</title>
+  <style>
+    /* ===== リセット（HAY Japan 準拠）===== */
+    * { box-sizing: border-box; }
+    body {
+      background: #f2f2f2;
+      color: #000;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      word-wrap: break-word;
+      -webkit-text-size-adjust: 100%;
+      font-family: '游ゴシック体', 'Yu Gothic', YuGothic, 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', 'Hiragino Kaku Gothic Pro', 'ヒラギノ角ゴ Pro W3', Meiryo, メイリオ, 'MS PGothic', 'ＭＳ Ｐゴシック', sans-serif;
+      font-weight: 500;
+    }
+    body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, pre, form, fieldset, input, textarea, p, blockquote, th, td, hr { margin: 0; padding: 0; }
+    li { list-style-type: none; }
+    img { border: 0; max-width: 100%; vertical-align: top; }
+    a { color: #000; text-decoration: none; }
+    a:hover { opacity: 0.7; }
+
+    /* ===== ボタン ===== */
+    .button { display: inline-block; padding: 16px 10px; line-height: 1; text-align: center; cursor: pointer; transition: .3s; border-radius: 0; }
+    .button.normal { background: #fff; color: #000; border: 1px solid #00816D; }
+    .button.medium { width: 100%; max-width: 320px; font-size: 16px; }
+    .button.normal:hover { background: #00816D; color: #fff; }
+
+    /* ===== header_information（アナウンスバー）===== */
+    .header_information {
+      padding: 6px 0;
+      background: #00816D;
+    }
+    .header_information p {
+      margin: 0 auto;
+      max-width: 1200px;
+      color: #fff;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    /* ===== ヘッダー（HAY Japan 準拠）===== */
+    #header {
+      background: #f2f2f2;
+      border-bottom: solid 1px #CECECE;
+      width: 100%;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    #header .inner {
+      margin: 0 auto;
+      padding: 20px 20px 0;
+      width: 100%;
+      max-width: 1200px;
+      position: relative;
+    }
+    #header h1 {
+      margin: 0 auto 14px;
+      text-align: center;
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+    }
+    #header h1 a { color: #000; text-decoration: none; }
+    #header .header_bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+    #header .gnav ul { display: flex; }
+    #header .gnav li { display: inline-block; margin: 0 0 0 30px; }
+    #header .gnav li:first-child { margin: 0; }
+    #header .gnav li a {
+      display: block;
+      padding: 8px 5px 18px;
+      color: #000;
+      font-size: 13px;
+      line-height: 1;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    #header .gnav li a:hover { opacity: 0.6; }
+    #header .gnav li a.on { border-bottom: 2px solid #000; }
+    #header .nav { display: flex; align-items: center; gap: 20px; }
+    #header .nav li a {
+      font-size: 12px;
+      font-weight: bold;
+      text-decoration: none;
+      color: #000;
+    }
+    #header .nav li a:hover { opacity: 0.6; }
+    #header .item_count {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background: #000;
+      color: #fff;
+      font-size: 8px;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 50%;
+      line-height: 14px;
+      margin-left: 3px;
+      vertical-align: super;
+    }
+
+    /* ===== メインコンテンツ ===== */
+    #main {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 1200px;
+      font-size: 16px;
+      padding: 0 20px;
+    }
+    #main h2 {
+      margin: 60px 0;
+      font-size: 34px;
+      text-align: center;
+      font-weight: bold;
+      font-family: 'Helvetica Neue', 'Open Sans', Arial, '游ゴシック体', 'Yu Gothic', YuGothic, sans-serif;
+    }
+    #main h2 .sub {
+      display: block;
+      font-size: 14px;
+      font-weight: 500;
+      margin-top: 10px;
+    }
+
+    /* ===== ext.about ===== */
+    #ext.about .content { margin: 0 auto; max-width: 1200px; }
+
+    #ext.about .flex {
+      display: flex;
+      margin: 0 0 120px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    #ext.about .flex .img { margin: 0; width: 50%; }
+    #ext.about .flex .img img { width: 100%; }
+    #ext.about .flex .text { margin: 0; width: 41%; }
+
+    #ext.about .flex.img_right .img { width: 57.5%; display: flex; gap: 2%; }
+    #ext.about .flex.img_right .img li { width: 49%; }
+    #ext.about .flex.img_right .img li img { width: 100%; }
+    #ext.about .flex.img_right .text { width: 37.5%; }
+
+    #ext.about .flex.img_right2 .img { width: 35%; }
+    #ext.about .flex.img_right2 .text { width: 55%; }
+    #ext.about .flex.img_right2 .text h3 { display: none; }
+
+    #ext.about h3 {
+      margin: 0 0 30px;
+      font-size: 28px;
+      font-weight: bold;
+      font-family: 'Helvetica Neue', 'Open Sans', Arial, '游ゴシック体', 'Yu Gothic', YuGothic, sans-serif;
+    }
+    #ext.about h3 .sub {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      margin-top: 8px;
+    }
+    #ext.about h3.border::after {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: #000;
+      margin-top: 18px;
+    }
+    #ext.about p { line-height: 200%; font-size: 14px; margin-bottom: 20px; }
+    #ext.about p.name { margin: 20px 0 0; text-align: right; font-size: 13px; }
+
+    #ext.about .sentence {
+      text-align: center;
+      margin: 0 auto 80px;
+    }
+    #ext.about .sentence h3 { margin: 0 0 30px; }
+    #ext.about .button.about { margin: 40px auto 0; }
+
+    #ext.about .img_list {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 0 80px;
+      gap: 2%;
+    }
+    #ext.about .img_list li { width: 32%; }
+    #ext.about .img_list li img { width: 100%; }
+
+    /* ===== フッター ===== */
+    #footer {
+      background: #222;
+      color: #fff;
+      padding: 56px 20px 32px;
+      margin-top: 80px;
+    }
+    #footer .footer_inner { max-width: 1200px; margin: 0 auto; }
+    #footer .footer_links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 48px;
+      margin-bottom: 48px;
+      padding-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+    }
+    #footer .footer_links_ttl {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 14px;
+    }
+    #footer .footer_links ul li { margin-bottom: 10px; }
+    #footer .footer_links ul li a { color: rgba(255,255,255,0.6); font-size: 12px; text-decoration: none; }
+    #footer .footer_links ul li a:hover { color: #fff; }
+    #footer .footer_bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    #footer .footer_logo { font-size: 16px; letter-spacing: 0.5em; color: #fff; }
+    .sns { display: flex; gap: 20px; }
+    .sns li a { font-size: 11px; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; }
+    .sns li a:hover { color: #fff; }
+    .copyright { font-size: 10px; color: rgba(255,255,255,0.25); margin-top: 24px; text-align: center; }
+
+    /* ===== レスポンシブ ===== */
+    @media screen and (max-width: 767px) {
+      #header .gnav { display: none; }
+      #header h1 { text-align: left; font-size: 18px; }
+      #ext.about .flex,
+      #ext.about .flex.img_right,
+      #ext.about .flex.img_right2 { flex-direction: column; margin: 0 0 60px; }
+      #ext.about .flex .img,
+      #ext.about .flex .text,
+      #ext.about .flex.img_right .img,
+      #ext.about .flex.img_right .text,
+      #ext.about .flex.img_right2 .img,
+      #ext.about .flex.img_right2 .text { width: 100%; }
+      #ext.about .flex.img_left .text { margin-top: 32px; }
+      #ext.about .flex.img_right .text { order: -1; margin-bottom: 32px; }
+      #ext.about .flex.img_right .img { flex-direction: row; }
+      #ext.about .flex.img_right2 .text { order: -1; margin-bottom: 32px; }
+      #ext.about .img_list { flex-direction: column; gap: 12px; }
+      #ext.about .img_list li { width: 100%; }
+      #footer .footer_links { gap: 20px; }
+      #footer .footer_bottom { flex-direction: column; align-items: flex-start; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== アナウンスバー（HAY Japan #00816D）===== -->
+  <div class="header_information">
+    <p>¥15,000以上のご注文で送料無料 — NOUVEAU 2026 SS コレクション 発売中</p>
+  </div>
+
+  <!-- ===== ヘッダー ===== -->
+  <div id="header">
+    <div class="inner">
+      <h1><a href="/">É P U R E</a></h1>
+      <div class="header_bottom">
+        <nav class="gnav">
+          <ul>
+            <li><a href="/#products">家具</a></li>
+            <li><a href="/#products">テキスタイル</a></li>
+            <li><a href="/#products">照明</a></li>
+            <li><a href="/#products">キッチン</a></li>
+            <li><a href="/#products">オブジェ</a></li>
+            <li><a href="about.html" class="on">ブランド</a></li>
+            <li><a href="/#store">店舗</a></li>
+          </ul>
+        </nav>
+        <nav class="nav">
+          <ul>
+            <li><a href="#">アカウント</a></li>
+            <li><a href="#">カート<span class="item_count">0</span></a></li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== メインコンテンツ ===== -->
+  <div id="main">
+    <div id="ext" class="about">
+      <div class="content">
+
+        <h2>ABOUT ÉPURE<span class="sub">ÉPUREについて</span></h2>
+
+        <!-- OUR VISION：画像左・テキスト右 -->
+        <div class="flex img_left">
+          <div class="img">
+            <img src="/prod-p6-sofa.jpg" alt="ÉPURE OUR VISION" />
+          </div>
+          <div class="text">
+            <h3 class="border">OUR VISION<span class="sub">ÉPUREの哲学</span></h3>
+            <p>「よいデザインはあらゆる人の権利である」という理念のもと、ÉPUREは2018年、東京を拠点に設立されました。北欧デザインの機能美と、日本の美意識が持つ「引き算の哲学」を融合させ、日常空間に純粋な美しさをもたらすプロダクトを作り続けています。</p>
+            <p>アート、建築、現代カルチャーの3つをインスピレーションの源として、機能的でありながら感情に訴えるデザインを追求しています。</p>
+          </div>
+        </div>
+
+        <!-- WHAT WE DO：テキスト左・2枚画像右 -->
+        <div class="flex img_right">
+          <div class="text">
+            <h3 class="border">WHAT WE DO<span class="sub">ÉPUREの取り組み</span></h3>
+            <p>素材の選定から製造工程、パッケージングに至るまで、すべての工程で誠実さと持続可能性を追求しています。</p>
+            <p>国内外の小規模工房と長期的なパートナーシップを結び、職人の技術と環境負荷の低減を両立しています。流行に左右されない普遍的なデザインで、長く使い続けられるプロダクトをお届けします。</p>
+          </div>
+          <ul class="img">
+            <li><img src="/prod-p4-blanket.jpg" alt="ÉPURE WHAT WE DO 1" /></li>
+            <li><img src="/prod-p2-cushion.jpg" alt="ÉPURE WHAT WE DO 2" /></li>
+          </ul>
+        </div>
+
+        <!-- OUR BRAND：画像左・テキスト右 -->
+        <div class="flex img_left">
+          <div class="img">
+            <img src="/chair-hero.png" alt="ÉPURE OUR BRAND" />
+          </div>
+          <div class="text">
+            <h3 class="border">OUR BRAND<span class="sub">ブランドのインスピレーション</span></h3>
+            <p>わたしたちはアート、建築、現代カルチャーの3つをインスピレーションの源としています。</p>
+            <p>身近な環境に意識を向けることで得られるインスピレーション。そしてこの時代における文化の鼓動を感じることで、わたしたちを取り囲む世界と足並みを合わせることができるのです。</p>
+          </div>
+        </div>
+
+        <!-- OUR BRAND 引用：テキスト左・画像右 -->
+        <div class="flex img_right2">
+          <div class="text">
+            <h3>OUR BRAND</h3>
+            <p>「美しいプロダクトとは、存在することで空間を変え、使うことで生活を豊かにするものだ。アートの素晴らしい点は、オリジナリティと、思いも寄らない意外性に溢れていることです。建築は、私たちの作品を生みだす背景であり、また実際に用いられる場でもあります。そして、現代カルチャーにはその時代の精神や出来事を反映した力強さがある。このアート、建築、現代カルチャーの三者の間に存在しながらすべてを少しずつ取り入れることのできた製品こそ、最高の作品といえるかもしれません」</p>
+            <p class="name">— 田本 翔也、ÉPUREファウンダー</p>
+          </div>
+          <div class="img">
+            <img src="/hero-about.jpg" alt="ÉPURE OUR BRAND" />
+          </div>
+        </div>
+
+        <!-- OUR DESIGNERS：中央テキスト -->
+        <div class="sentence">
+          <h3>OUR DESIGNERS<span class="sub">ÉPUREのデザイナー</span></h3>
+          <p>わたしたちは、才能、好奇心、そして勇気に溢れる<br />
+            世界中のデザイナーとの協働を続けています。<br />
+            一人ひとりのデザイナーが、ÉPUREファミリーの一員です。</p>
+          <a href="#" class="button normal medium about">デザイナー一覧へ</a>
+        </div>
+
+        <!-- デザイナー 3枚写真 -->
+        <ul class="img_list">
+          <li><img src="/prod-p1-chair.jpg" alt="田本 翔也" /></li>
+          <li><img src="/prod-p4-blanket.jpg" alt="中田 彩花" /></li>
+          <li><img src="/prod-p5-lamp.jpg" alt="Erik Lindqvist" /></li>
+        </ul>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== フッター ===== -->
+  <footer id="footer">
+    <div class="footer_inner">
+      <div class="footer_links">
+        <ul>
+          <li class="footer_links_ttl">プロダクト</li>
+          <li><a href="/">新着</a></li>
+          <li><a href="/">家具</a></li>
+          <li><a href="/">テキスタイル</a></li>
+          <li><a href="/">照明</a></li>
+          <li><a href="/">OUTLET</a></li>
+        </ul>
+        <ul>
+          <li class="footer_links_ttl">ブランド</li>
+          <li><a href="about.html">ÉPUREについて</a></li>
+          <li><a href="about.html">デザイナー</a></li>
+          <li><a href="about.html">サステナビリティ</a></li>
+          <li><a href="/">採用情報</a></li>
+        </ul>
+        <ul>
+          <li class="footer_links_ttl">店舗</li>
+          <li><a href="/">直営店</a></li>
+          <li><a href="/">取扱店</a></li>
+          <li><a href="/">法人のお客様</a></li>
+        </ul>
+        <ul>
+          <li class="footer_links_ttl">サポート</li>
+          <li><a href="/">ショッピングガイド</a></li>
+          <li><a href="/">よくある質問</a></li>
+          <li><a href="/#contact">お問い合わせ</a></li>
+          <li><a href="/">特定商取引法</a></li>
+          <li><a href="/">プライバシーポリシー</a></li>
+        </ul>
+      </div>
+      <div class="footer_bottom">
+        <span class="footer_logo">ÉPURE</span>
+        <ul class="sns">
+          <li><a href="#">Instagram</a></li>
+          <li><a href="#">Facebook</a></li>
+          <li><a href="#">Pinterest</a></li>
+        </ul>
+      </div>
+      <p class="copyright">© 2026 ÉPURE Inc. / All Rights Reserved.</p>
+    </div>
+  </footer>
+
+</body>
+</html>

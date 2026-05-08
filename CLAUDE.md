@@ -23,6 +23,11 @@
 - タップターゲットは最低 44px 以上を確保する
 - モバイルファーストで CSS を記述することを推奨する
 
+### チャットボット
+- このプロジェクトは**チャットボット付きのホームページ**を作るプロジェクトである
+- チャットボット機能は常に動作することを保証し、破壊的な変更は行わない
+- AI モデルは `claude-haiku-4-5`（高速・低コスト）を使用する
+
 ---
 
 ## ファイル構成
@@ -30,6 +35,7 @@
 ```
 my-hp/
 ├── index.html          # メインページ（ヒーロー / サービス / 実績 / お問い合わせ / チャットボット）
+├── epure.html          # index.html と同内容のミラーページ
 ├── server.js           # Express バックエンド（Claude API プロキシ、開発用）
 ├── vite.config.js      # Vite 設定（/api を port 3001 にプロキシ）
 ├── vercel.json         # Vercel デプロイ設定
@@ -37,9 +43,9 @@ my-hp/
 ├── .env.example        # APIキー設定テンプレート
 ├── CLAUDE.md           # このファイル
 ├── api/
-│   └── chat.js         # Vercel サーバーレス関数（本番環境用 /api/chat）
-└── .claude/
-    └── launch.json     # 開発サーバー設定
+│   ├── chat.js         # Vercel サーバーレス関数（本番環境用 /api/chat）
+│   └── contact.js      # お問い合わせフォーム処理
+└── public/             # 静的画像（製品・ヒーロー画像）
 ```
 
 ## セクション構成（index.html）
